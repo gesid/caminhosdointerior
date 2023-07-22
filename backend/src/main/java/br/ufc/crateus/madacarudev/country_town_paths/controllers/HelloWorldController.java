@@ -14,7 +14,7 @@ import br.ufc.crateus.madacarudev.country_town_paths.dtos.input.CreateHelloWorld
 import br.ufc.crateus.madacarudev.country_town_paths.dtos.input.UpdateHelloWorldInputDto;
 
 @RestController
-@RequestMapping("/hello-world")
+@RequestMapping("api/hello-world")
 public class HelloWorldController implements HelloWorldOpenApi{
 
   @GetMapping
