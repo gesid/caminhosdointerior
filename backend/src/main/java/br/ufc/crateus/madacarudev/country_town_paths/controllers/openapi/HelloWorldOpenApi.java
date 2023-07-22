@@ -15,7 +15,7 @@ public interface HelloWorldOpenApi {
   @ApiOperation(value = "Cria mensagem de hello world")
   public void createHelloWorldMessage(CreateHelloWorldInputDto body);
 
-  @ApiOperation(value = "Atualizar mensagem de hello world")
+  @ApiOperation(value = "Atualiza mensagem de hello world")
   public void updateHelloWorldMessage(Long id, UpdateHelloWorldInputDto body);  
   
   @ApiOperation(value = "Remove mensagem de hello world")
