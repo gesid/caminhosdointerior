@@ -3,16 +3,20 @@ import ReactDOM from "react-dom/client";
 import GlobalStyle from "./styles/globalStyles";
 import { RouterProvider } from "react-router-dom";
 import { route } from "./routes";
-import { Header } from "./components/Header";
 import { ThemeProvider } from "styled-components";
 import { theme } from "./themes";
 
+import { NavBar } from "./components/NavBar";
+import { CurrentStepProvider } from "./context/CurrentStep.context.";
+
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <ThemeProvider theme={theme}>
-      <GlobalStyle />
-      <Header />
-      <RouterProvider router={route} />
-    </ThemeProvider>
+    <CurrentStepProvider>
+      <ThemeProvider theme={theme}>
+        <GlobalStyle />
+        <NavBar />
+        <RouterProvider router={route} />
+      </ThemeProvider>
+    </CurrentStepProvider>
   </React.StrictMode>
 );
