@@ -1,5 +1,6 @@
 package br.ufc.crateus.madacarudev.country_town_paths.models;
 
+import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -15,11 +16,12 @@ import lombok.Setter;
 public class ImageModel {
   @Id
   @Column(unique = true, updatable = false, length = 36)
-  private String id;
+  private UUID id;
 
   @Column(nullable = false, length = 36)
   private String entityId;
 
   @Column(nullable = false)
   private String imageUrl;
+  
 }
