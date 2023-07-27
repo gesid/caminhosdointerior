@@ -8,8 +8,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.NoArgsConstructor;
+
 @Entity
 @Table
+@NoArgsConstructor
 public class Region {
     @Id
     @GeneratedValue
@@ -28,6 +31,10 @@ public class Region {
     }
 
     public void setName(String name) {
+        this.name = name;
+    }
+
+    public Region(String name) {
         this.name = name;
     }
 }
