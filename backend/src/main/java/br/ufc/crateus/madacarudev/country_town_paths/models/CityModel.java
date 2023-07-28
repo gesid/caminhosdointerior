@@ -4,6 +4,8 @@ import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.GeneratedValue;
 
@@ -13,7 +15,7 @@ import lombok.Setter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "city")
+@Table(name = "cities")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -26,8 +28,9 @@ public class CityModel {
   @Column(nullable = false)
   private String name;
 
-  @Column(nullable = false, columnDefinition = "BINARY(36)")
-  private UUID regionId;  
+  @ManyToOne()
+  @JoinColumn(name="region_id", nullable=false)
+  private Region regionId;  
 
   @Column(nullable = false)
   private String imageBannerUrl;
