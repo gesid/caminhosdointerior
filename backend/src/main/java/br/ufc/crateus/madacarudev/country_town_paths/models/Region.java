@@ -23,7 +23,7 @@ public class Region {
     @Column(length = 100, nullable = false)
     public String name;
 
-    @OneToMany(mappedBy="regionId")
+    @OneToMany(mappedBy="region")
     public List<CityModel> cities;
 
     public UUID getId() {
