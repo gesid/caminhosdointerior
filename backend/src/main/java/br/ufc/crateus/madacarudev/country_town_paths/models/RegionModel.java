@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "regions")
 @NoArgsConstructor
-public class Region {
+public class RegionModel {
     @Id
     @GeneratedValue
     @Column(columnDefinition = "BINARY(16)")
@@ -38,7 +38,7 @@ public class Region {
         this.name = name;
     }
 
-    public Region(String name) {
+    public RegionModel(String name) {
         this.name = name;
     }
 }
