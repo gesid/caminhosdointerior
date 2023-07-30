@@ -15,7 +15,7 @@ import lombok.Setter;
 @Setter
 public class ImageModel {
   @Id
-  @Column(unique = true, updatable = false, length = 36)
+  @Column(unique = true, updatable = false, columnDefinition = "BINARY(16)")
   private UUID id;
 
   @Column(nullable = false, length = 36)
