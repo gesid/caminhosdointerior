@@ -20,7 +20,7 @@ public class RegionModel {
     @Column(unique = true, updatable = false, columnDefinition = "BINARY(16)")
     private UUID id;
 
-    @Column(length = 100, nullable = false)
+    @Column(nullable = false)
     public String name;
 
     @OneToMany(mappedBy="region")
