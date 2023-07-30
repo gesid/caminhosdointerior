@@ -30,7 +30,7 @@ public class CityModel {
 
   @ManyToOne()
   @JoinColumn(name="region_id", nullable=false)
-  private Region region;  
+  private RegionModel region;  
 
   @Column(nullable = false)
   private String imageBannerUrl;
