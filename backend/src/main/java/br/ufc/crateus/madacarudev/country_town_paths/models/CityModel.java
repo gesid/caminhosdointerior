@@ -24,11 +24,15 @@ import lombok.NoArgsConstructor;
 public class CityModel {
   @Id
   @GeneratedValue
-  @Column(unique = true, updatable = false, length = 36)
+  @Column(unique = true, updatable = false, columnDefinition = "BINARY(16)")
   private UUID id;
 
   @Column(nullable = false)
   private String name;
+
+  @ManyToOne()
+  @JoinColumn(name="region_id", nullable=false)
+  private RegionModel region;  
 
   @Column(nullable = false)
   private String imageBannerUrl;

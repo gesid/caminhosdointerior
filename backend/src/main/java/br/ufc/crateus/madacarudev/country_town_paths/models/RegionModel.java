@@ -16,11 +16,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RegionModel {
     @Id
-    @GeneratedValue
-    @Column(columnDefinition = "BINARY(16)")
+    @Column(unique = true, updatable = false, columnDefinition = "BINARY(16)")
     private UUID id;
 
-    @Column(length = 100, nullable = false)
+    @Column(nullable = false)
     public String name;
 
     @OneToMany(mappedBy="region")
