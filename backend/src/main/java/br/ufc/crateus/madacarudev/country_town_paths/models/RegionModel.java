@@ -16,7 +16,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RegionModel {
     @Id
-    @GeneratedValue
     @Column(unique = true, updatable = false, columnDefinition = "BINARY(16)")
     private UUID id;
 
