@@ -1,6 +1,7 @@
 import * as S from "./styles";
 import Logo from "../../assets/Logo.svg";
 import { useCurrentStep } from "../../context/CurrentStep.context.";
+import { SearchInput } from "./SearchInput";
 
 export const NavBar = () => {
   const [currentStep] = useCurrentStep();
@@ -8,6 +9,7 @@ export const NavBar = () => {
   return (
     <S.Container>
       <img src={Logo} />
+      {currentStep !== 1 && <SearchInput />}
       <S.Actions>
         <S.Option href="/" currentStep={currentStep === 1}>
           Home
