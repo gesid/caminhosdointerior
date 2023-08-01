@@ -30,10 +30,6 @@ public class CityModel {
   @Column(nullable = false)
   private String name;
 
-  @ManyToOne()
-  @JoinColumn(name="region_id", nullable=false)
-  private RegionModel region;  
-
   @Column(nullable = false)
   private String imageBannerUrl;
  

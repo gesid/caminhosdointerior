@@ -1,1 +1,4 @@
 .vscode
+
+# Environment configuration settings
+backend/src/main/resources/firebase-config.json
