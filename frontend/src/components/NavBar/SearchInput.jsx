@@ -1,10 +1,10 @@
 import * as S from "./styles";
-import reactLogo from "../../assets/react.svg";
+import seatch from "../../assets/search.svg";
 
 export const SearchInput = () => {
   return (
     <S.SearchOption>
-      <img src={reactLogo} alt="" />
+      <img src={seatch} alt="" />
       <S.Input placeholder="Pesquisar regiões, cidades ou atrações turísticas" />
     </S.SearchOption>
   );
