@@ -35,9 +35,10 @@ export const SearchOption = styled.div`
   background-color: ${({ theme }) => theme.colors.white};
   border-radius: 15px;
   align-items: center;
-
+  padding: 0.7rem;
+  gap: 1rem;
   img {
-    width: 1rem;
+    width: 1.5rem;
   }
 `;
 
@@ -47,5 +48,4 @@ export const Input = styled.input`
   flex: 1;
   border-radius: inherit;
   font-size: 1rem;
-  padding: 0.7rem;
 `;
