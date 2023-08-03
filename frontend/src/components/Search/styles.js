@@ -10,7 +10,6 @@ export const LabelSearch = styled.label`
     background: #fff;
     padding: 10px;
     border-radius: 5rem 0 0 5rem;
-
 `
 export const IconSearch = styled.img`
     height: 23px;
