@@ -4,10 +4,10 @@ import background from "../assets/backgroundInputLogo.svg";
 
 export const Header = styled.header`
     width: 90%;
-    height: 50vh;
     background: url(${background}) no-repeat center center ;
     margin: auto;
     display: flex;
+    padding: 3.5rem;
     flex-direction: column;
     justify-content: center;
     align-items: center;
