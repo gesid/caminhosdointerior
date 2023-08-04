@@ -3,9 +3,10 @@ import { styled } from "styled-components";
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: 80%; // TODO: verificar padding da pagina
+  width: 100%; // TODO: verificar padding da pagina
   gap: 2.5rem;
   justify-content: center;
+  padding: 0 2rem;
 `;
 
 export const TitleArea = styled.div`
@@ -30,15 +31,15 @@ export const Cards = styled.div`
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
   align-items: center;
-  justify-content: center;
 `;
 
 export const CardContainer = styled.div`
-  width: 10rem;
+  width: 20rem;
   height: 80%;
   /*   background-image: url(${(props) => props.background}); */
   background-color: red;
   background-size: cover;
+  position: relative;
 `;
 
 export const CardTitle = styled.h2`
