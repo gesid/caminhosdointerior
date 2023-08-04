@@ -1,4 +1,5 @@
 import { styled } from "styled-components";
+import {motion} from 'framer-motion'
 
 export const Container = styled.div`
   display: flex;
@@ -24,7 +25,7 @@ export const Title = styled.h1`
   font-weight: bold;
 `;
 
-export const Cards = styled.div`
+export const Cards = styled.div(motion.div)`
   display: flex;
   gap: 1.5rem;
   overflow-x: scroll;
