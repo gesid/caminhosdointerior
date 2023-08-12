@@ -1,5 +1,4 @@
 import { styled } from "styled-components";
-import {motion} from 'framer-motion'
 
 export const Container = styled.div`
   display: flex;
@@ -25,7 +24,7 @@ export const Title = styled.h1`
   font-weight: bold;
 `;
 
-export const Cards = styled.div(motion.div)`
+export const Cards = styled.div`
   display: flex;
   gap: 1.5rem;
   overflow-x: scroll;
@@ -35,12 +34,13 @@ export const Cards = styled.div(motion.div)`
 `;
 
 export const CardContainer = styled.div`
-  width: 20rem;
-  height: 80%;
+min-height: 30rem;
+min-width: 40rem;
   /*   background-image: url(${(props) => props.background}); */
   background-color: red;
   background-size: cover;
   position: relative;
+  scroll-snap-align: center;
 `;
 
 export const CardTitle = styled.h2`
