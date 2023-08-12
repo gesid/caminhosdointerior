@@ -11,10 +11,16 @@ export const Header = styled.header`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-`
+`;
 
 export const Logo = styled.img`
-    width: 563px;
-    height: 156px;
-    margin-bottom: 4rem;
-`
+  width: 563px;
+  height: 156px;
+  margin-bottom: 4rem;
+`;
+
+export const Events = styled.div`
+  display: flex;
+  flex-direction: column;
+/*   gap: 2.5rem; */
+`;
