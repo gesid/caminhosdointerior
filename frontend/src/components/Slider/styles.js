@@ -6,17 +6,17 @@ export const Container = styled.div`
   width: 100%; // TODO: verificar padding da pagina
   gap: 2.5rem;
   justify-content: center;
-  padding: 0 2rem;
+  padding: 2.25rem 2rem;
 `;
 
 export const TitleArea = styled.div`
   display: flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.5rem;
 `;
 
 export const Icon = styled.img`
-  width: 3rem;
+  width: 2rem;
 `;
 
 export const Title = styled.h1`
@@ -34,11 +34,14 @@ export const Cards = styled.div`
 `;
 
 export const CardContainer = styled.div`
-min-height: 30rem;
-min-width: 40rem;
-  /*   background-image: url(${(props) => props.background}); */
-  background-color: red;
-  background-size: cover;
+  display: grid;
+  place-items: center;
+  min-height: 18.5rem;
+  min-width: 25%;
+  background-image: url(${(props) => props.background});
+  background-color: rgba(0, 0, 0, 0.4);
+  background-blend-mode: color;
+  background-size: 100% 100%;
   position: relative;
   scroll-snap-align: center;
 `;
@@ -46,4 +49,5 @@ min-width: 40rem;
 export const CardTitle = styled.h2`
   font-size: 1rem;
   font-weight: 600;
+  color: ${({ theme }) => theme.colors.white};
 `;

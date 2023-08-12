@@ -8,7 +8,7 @@ export const Slider = ({ title, icon, cards }) => {
         <S.Icon src={icon} />
         <S.Title> {title}</S.Title>
       </S.TitleArea>
-      <S.Cards drag>
+      <S.Cards>
         {cards.map((card) => (
           <Card
             id={card.id}
