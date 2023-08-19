@@ -19,15 +19,16 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Import(SpringDataRestConfiguration.class)
 public class SwaggerConfig {
   public static final String HELLO_WORLD_TAG = "Hello World";
+  public static final String REGION_TAG = "Região";
 
   @Bean
   public Docket api() {
     return new Docket(DocumentationType.SWAGGER_2)
         .select()
-        .paths(PathSelectors.any())
+        .paths(PathSelectors.ant("/api/**"))
         .build().apiInfo(apiInfoMetaData())
         .tags(
-          new Tag(HELLO_WORLD_TAG, "Endpoints de Hello World")
+          new Tag(REGION_TAG, "Endpoints de Região")
         );
   }
 
