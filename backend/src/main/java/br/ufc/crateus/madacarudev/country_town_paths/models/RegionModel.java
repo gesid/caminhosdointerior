@@ -9,9 +9,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 
 @Entity
 @Table(name = "regions")
+@AllArgsConstructor
 @NoArgsConstructor
 public class RegionModel {
     @Id
