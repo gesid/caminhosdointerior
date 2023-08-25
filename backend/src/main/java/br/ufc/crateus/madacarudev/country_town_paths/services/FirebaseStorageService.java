@@ -46,55 +46,16 @@ public class FirebaseStorageService implements IStorageService {
 
 
   @Override
-  public String save(String resourcePath, MultipartFile file) throws IOException {
-    Bucket bucket = StorageClient.getInstance().bucket();
-
-    String newFilename = generateFileName(file.getOriginalFilename());
-    String newFileResourcePath = this.getFileResource(resourcePath, newFilename);
-
-    bucket.create(newFileResourcePath, file.getBytes(), file.getContentType());
-    
-    return newFilename;
+  public String save(String filePath, MultipartFile file) throws Exception {
+    throw new Exception("Method not implemented");
   }
 
   @Override
-  public void delete(String resourcePath, String name) throws IOException {
-    Bucket bucket = StorageClient.getInstance().bucket();
-
-    if (Objects.isNull(bucket)) {
-      throw new IOException("invalid file name");
-    }
-
-    String fileResourcePath = this.getFileResource(resourcePath, name);
-    Blob blob = bucket.get(fileResourcePath);
-
-    if (Objects.isNull(blob)) {
-      throw new IOException("file not found");
-    }
-
-    blob.delete();
+  public void delete(String resourceUrl) throws Exception {
+      throw new Exception("Method not implemented");
   }
 
-  @Override
-  public String getExtension(String originalFileName) {
-    return StringUtils.getFilenameExtension(originalFileName);
-  }
-
-  @Override
-  public String generateFileName(String originalFileName) {
-    return UUID.randomUUID().toString() + "." + getExtension(originalFileName);
-  }
-
-  @Override
-  public String getFileUrl(String resourcePath, String name) {
-    String storageUrl = this.firebaseProperties.getStorageUrl();
-    String fileResourcePath = this.getFileResource(resourcePath, name);
-
-    String fileUrl = String.format(storageUrl, fileResourcePath);
-    return fileUrl;
-  }
-
-  private String getFileResource(String resourcePath, String filename){
-    return resourcePath + filename;
+  private String getFileResource(String filePath, String filename){
+    return filePath + filename;
   } 
 }

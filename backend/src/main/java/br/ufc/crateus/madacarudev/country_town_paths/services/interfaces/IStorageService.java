@@ -1,16 +1,22 @@
 package br.ufc.crateus.madacarudev.country_town_paths.services.interfaces;
 
 import java.io.IOException;
+import java.util.Objects;
+import java.util.UUID;
+
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface IStorageService {
-  String getFileUrl( String resourcePath, String name);
+  String save(String directory, MultipartFile file) throws Exception;
 
-  String save(String resourcePath, MultipartFile file) throws IOException;
+  void delete(String resourceUrl) throws Exception;
 
-  void delete( String resourcePath, String name) throws IOException;
+  default String getFileExtension(String originalFileName){
+    return StringUtils.getFilenameExtension(originalFileName);
+  }
 
-  String getExtension(String originalFileName);
-
-  String generateFileName(String originalFileName);
+  default String generateFileName(String originalFileName) {
+    return UUID.randomUUID().toString() + "-" + originalFileName + "." + this.getFileExtension(originalFileName);
+  }
 }
