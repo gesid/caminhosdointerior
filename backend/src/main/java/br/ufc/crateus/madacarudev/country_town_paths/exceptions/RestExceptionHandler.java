@@ -33,6 +33,16 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler{
         return ResponseEntity.status(HttpStatus.CONFLICT).body(informativeMessage);
     }
 
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(BadRequestException.class)
+    public ResponseEntity<InformativeMessageOutputDto> handleBadRequestException(BadRequestException badRequestException,
+    HttpServletRequest request) {
+        InformativeMessageOutputDto informativeMessage = new InformativeMessageOutputDto();
+        informativeMessage.setMessage(badRequestException.getMessage());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(informativeMessage);
+    }
+
 //...
 
 }
