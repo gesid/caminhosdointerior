@@ -38,14 +38,14 @@ public class RegionController implements RegionControllerOpenApi {
     @PostMapping
     public ResponseEntity<InformativeMessageOutputDto> create(@RequestBody CreateRegionDto region) throws EntityConflictException, BadRequestException{
         regionService.create(region);
-        InformativeMessageOutputDto message = new InformativeMessageOutputDto("Região criada com sucesso");
+        InformativeMessageOutputDto message = new InformativeMessageOutputDto("Região criada com sucesso.");
         return ResponseEntity.status(HttpStatus.CREATED).body(message);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<InformativeMessageOutputDto> update(@PathVariable UUID id, @RequestBody UpdateRegionDto region) throws EntityNotFoundException, BadRequestException{
         regionService.update(id, region);
-        InformativeMessageOutputDto message = new InformativeMessageOutputDto("Região criada com sucesso");
+        InformativeMessageOutputDto message = new InformativeMessageOutputDto("Região atualizada com sucesso.");
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 

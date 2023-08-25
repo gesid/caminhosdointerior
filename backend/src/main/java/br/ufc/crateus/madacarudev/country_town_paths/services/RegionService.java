@@ -105,21 +105,21 @@ public class RegionService {
 
     private void CheckIfIdIsPresentInRequest(UUID id) throws BadRequestException{
         if (Objects.isNull(id)) {
-            String errorMessage = "Não existe região com o id: " + id;
+            String errorMessage = "Não existe região com o id: " + id + ".";
             throw new BadRequestException(errorMessage);
         }
     }
 
     private void CheckIfExistisOtherRegionSameName(RegionModel existingRegion) throws EntityConflictException{
         if(Objects.nonNull(existingRegion)){
-            String errorMessage = "Já existe outra região com o nome: " + existingRegion.getName();
+            String errorMessage = "Já existe outra região com o nome: " + existingRegion.getName() + ".";
             throw new EntityConflictException(errorMessage);
         }
     }
 
     private void CheckIfNotExistisRegionById(RegionModel existingRegion,UUID id) throws EntityNotFoundException{
         if (Objects.isNull(existingRegion)) {
-            String errorMessage = "Não existe região com o id: " + id;
+            String errorMessage = "Não existe região com o id: " + id + ".";
             throw new EntityNotFoundException(errorMessage);
         }
     }
