@@ -9,6 +9,7 @@ import br.ufc.crateus.madacarudev.country_town_paths.repositories.RegionReposito
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.ufc.crateus.madacarudev.country_town_paths.exceptions.BadRequestException;
 import br.ufc.crateus.madacarudev.country_town_paths.exceptions.EntityConflictException;
 import br.ufc.crateus.madacarudev.country_town_paths.exceptions.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
@@ -41,13 +42,11 @@ public class RegionService {
         return regionsOutputDto;
     }
 
-    public RegionOutputDto getRegionById(UUID id) throws EntityNotFoundException {
-        RegionModel regionModel = regionRepository.findById(id).orElse(null);
+    public RegionOutputDto getRegionById(UUID id) throws EntityNotFoundException, BadRequestException {
+        CheckIfIdIsPresentInRequest(id);
 
-        if(Objects.isNull(regionModel)){
-            String errorMessage = "Não existe região com o id: " + id;
-            throw new EntityNotFoundException(errorMessage);
-        }
+        RegionModel regionModel = regionRepository.findById(id).orElse(null);
+        CheckIfNotExistisRegionById(regionModel, id);
 
         RegionOutputDto regionOutputDto = modelMapper.map(regionModel,RegionOutputDto.class);
 
@@ -58,13 +57,13 @@ public class RegionService {
         return regionRepository.findByName(name).orElse(null);
     }
 
-    public void create(CreateRegionDto region) throws EntityConflictException{
-        RegionModel existingRegion = getRegionByName(region.getName());
+    public void create(CreateRegionDto region) throws EntityConflictException, BadRequestException{
+        CheckIfNameIsPresentInRequest(region.getName());
+        CheckIfNameIsEmpty(region.getName());
 
-        if(Objects.nonNull(existingRegion)){
-            String errorMessage = "Já existe outra região com o nome: " + existingRegion.getName();
-            throw new EntityConflictException(errorMessage);
-        }
+        RegionModel existingRegion = getRegionByName(region.getName());
+        CheckIfExistisOtherRegionSameName(existingRegion);
+
         UUID uuid = UUID.randomUUID();
         List<CityModel> cities = new ArrayList<CityModel>();
         RegionModel regionCreate = new RegionModel(uuid, region.getName(),cities);
@@ -72,20 +71,56 @@ public class RegionService {
         regionRepository.save(regionCreate);
     }
 
-    public void update(UUID id, UpdateRegionDto region) throws EntityNotFoundException  {
-        RegionModel existingRegion = regionRepository.findById(id).orElse(null);
+    public void update(UUID id, UpdateRegionDto region) throws EntityNotFoundException, BadRequestException{
+        CheckIfIdIsPresentInRequest(id);
+        CheckIfNameIsPresentInRequest(region.getName());
+        CheckIfNameIsEmpty(region.getName());
+
+        RegionModel regionModel = regionRepository.findById(id).orElse(null);
         RegionModel updatedRegion = new RegionModel(region.getName());
 
+        CheckIfNotExistisRegionById(regionModel, id);
+        regionModel.setName(updatedRegion.getName());
+        regionRepository.save(regionModel);
+    }
+
+    public void deleteRegion(UUID id) throws BadRequestException {
+        CheckIfIdIsPresentInRequest(id);
+        regionRepository.deleteById(id);
+    }
+
+    private void CheckIfNameIsPresentInRequest(String regionName) throws BadRequestException{
+        if (Objects.isNull(regionName)) {
+            String errorMessage = "O nome não está presente no body da requisição.";
+            throw new BadRequestException(errorMessage);
+        }
+    }
+
+    private void CheckIfNameIsEmpty(String regionName) throws BadRequestException{
+        if (regionName == "") {
+            String errorMessage = "O nome não pode ser vazio.";
+            throw new BadRequestException(errorMessage);
+        }
+    }
+
+    private void CheckIfIdIsPresentInRequest(UUID id) throws BadRequestException{
+        if (Objects.isNull(id)) {
+            String errorMessage = "Não existe região com o id: " + id;
+            throw new BadRequestException(errorMessage);
+        }
+    }
+
+    private void CheckIfExistisOtherRegionSameName(RegionModel existingRegion) throws EntityConflictException{
+        if(Objects.nonNull(existingRegion)){
+            String errorMessage = "Já existe outra região com o nome: " + existingRegion.getName();
+            throw new EntityConflictException(errorMessage);
+        }
+    }
+
+    private void CheckIfNotExistisRegionById(RegionModel existingRegion,UUID id) throws EntityNotFoundException{
         if (Objects.isNull(existingRegion)) {
             String errorMessage = "Não existe região com o id: " + id;
             throw new EntityNotFoundException(errorMessage);
-
         }
-        existingRegion.setName(updatedRegion.getName());
-        regionRepository.save(existingRegion);
-    }
-
-    public void deleteRegion(UUID id) {
-        regionRepository.deleteById(id);
     }
 }
