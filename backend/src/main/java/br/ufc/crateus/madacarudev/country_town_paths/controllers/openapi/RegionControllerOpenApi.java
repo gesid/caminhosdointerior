@@ -33,7 +33,7 @@ public interface RegionControllerOpenApi {
   
   @ApiOperation(value = "Atualiza uma região")
   @PutMapping("/regions/{id}")
-  public ResponseEntity<InformativeMessageOutputDto> update(@PathVariable UUID id, @RequestBody UpdateRegionDto region) throws EntityNotFoundException, BadRequestException;
+  public ResponseEntity<InformativeMessageOutputDto> update(@RequestBody UpdateRegionDto region, @PathVariable UUID id) throws EntityNotFoundException, BadRequestException;
 
   @ApiOperation(value = "Deleta uma região")
   @DeleteMapping("/regions/{id}")
