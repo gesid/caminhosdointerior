@@ -1,7 +1,5 @@
 package br.ufc.crateus.madacarudev.country_town_paths.services.interfaces;
 
-import java.io.IOException;
-import java.util.Objects;
 import java.util.UUID;
 
 import org.springframework.util.StringUtils;

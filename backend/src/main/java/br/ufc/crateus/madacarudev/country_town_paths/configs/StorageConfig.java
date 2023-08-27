@@ -18,7 +18,7 @@ public class StorageConfig {
   }
 
   @Bean
-  public IStorageService storageService(){
+  IStorageService storageService(){
     String activeProfile = this.environment.getProperty("spring.profiles.active");
     if(Objects.nonNull(activeProfile) && activeProfile.equals("prod")){
       return new FirebaseStorageService();
