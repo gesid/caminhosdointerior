@@ -29,7 +29,6 @@ public class SwaggerConfig {
         .paths(PathSelectors.ant("/api/**"))
         .build().apiInfo(apiInfoMetaData())
         .tags(
-          new Tag(REGION_TAG, "Endpoints de Região"),
           new Tag(FEEDBACK_TAG, "Endpoints de Feedback")
         );
   }

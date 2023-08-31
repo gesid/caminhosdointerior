@@ -14,7 +14,7 @@ import br.ufc.crateus.madacarudev.country_town_paths.exceptions.EntityNotFoundEx
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
-@Api(tags = { SwaggerConfig.REGION_TAG })
+@Api(tags = { SwaggerConfig.FEEDBACK_TAG })
 public interface FeedbackControllerOpenApi {
 
   @ApiOperation(value = "Retorna todas os feedbacks")
