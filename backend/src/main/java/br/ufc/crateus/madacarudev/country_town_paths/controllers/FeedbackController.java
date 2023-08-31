@@ -8,10 +8,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import br.ufc.crateus.madacarudev.country_town_paths.controllers.openapi.FeedbackControllerOpenApi;
 import br.ufc.crateus.madacarudev.country_town_paths.dtos.input.CreateFeedbackDto;
@@ -34,13 +31,13 @@ public class FeedbackController implements FeedbackControllerOpenApi{
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<FeedbackOutputDto> getFeedbackById(UUID id) throws EntityNotFoundException{
+    public ResponseEntity<FeedbackOutputDto> getFeedbackById(@PathVariable UUID id) throws EntityNotFoundException{
         FeedbackOutputDto feedback = feedbackService.getFeedbackById(id);
         return ResponseEntity.ok(feedback);
     }
 
     @PostMapping
-    public ResponseEntity<InformativeMessageOutputDto> create(@Valid CreateFeedbackDto feedback) throws BadRequestException {
+    public ResponseEntity<InformativeMessageOutputDto> create(@Valid @RequestBody CreateFeedbackDto feedback) throws BadRequestException {
         feedbackService.create(feedback);
         InformativeMessageOutputDto message = new InformativeMessageOutputDto("Feedback enviado.");
         return ResponseEntity.status(HttpStatus.CREATED).body(message);
