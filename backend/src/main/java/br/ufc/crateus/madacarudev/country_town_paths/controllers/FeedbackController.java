@@ -3,9 +3,15 @@ package br.ufc.crateus.madacarudev.country_town_paths.controllers;
 import java.util.List;
 import java.util.UUID;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import br.ufc.crateus.madacarudev.country_town_paths.controllers.openapi.FeedbackControllerOpenApi;
 import br.ufc.crateus.madacarudev.country_town_paths.dtos.input.CreateFeedbackDto;
@@ -15,27 +21,28 @@ import br.ufc.crateus.madacarudev.country_town_paths.exceptions.BadRequestExcept
 import br.ufc.crateus.madacarudev.country_town_paths.exceptions.EntityNotFoundException;
 import br.ufc.crateus.madacarudev.country_town_paths.services.FeedbackService;
 
+@RestController
+@RequestMapping("api/feedbacks")
 public class FeedbackController implements FeedbackControllerOpenApi{
     @Autowired
     private FeedbackService feedbackService;
 
-    @Override
+    @GetMapping
     public ResponseEntity<List<FeedbackOutputDto>> getAll() {
         List<FeedbackOutputDto> feedbacks = feedbackService.getAll();
-        return new ResponseEntity<List<FeedbackOutputDto>>(feedbacks, HttpStatus.OK);
+        return new ResponseEntity<>(feedbacks, HttpStatus.OK);
     }
 
-    @Override
+    @GetMapping("/{id}")
     public ResponseEntity<FeedbackOutputDto> getFeedbackById(UUID id) throws EntityNotFoundException{
         FeedbackOutputDto feedback = feedbackService.getFeedbackById(id);
         return ResponseEntity.ok(feedback);
     }
 
-    @Override
-    public ResponseEntity<InformativeMessageOutputDto> create(CreateFeedbackDto feedback) throws BadRequestException {
+    @PostMapping
+    public ResponseEntity<InformativeMessageOutputDto> create(@Valid CreateFeedbackDto feedback) throws BadRequestException {
+        feedbackService.create(feedback);
         InformativeMessageOutputDto message = new InformativeMessageOutputDto("Feedback enviado.");
         return ResponseEntity.status(HttpStatus.CREATED).body(message);
     }
-    
-    
 }
