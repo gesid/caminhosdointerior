@@ -6,8 +6,6 @@ import br.ufc.crateus.madacarudev.country_town_paths.models.FeedbackModel;
 import br.ufc.crateus.madacarudev.country_town_paths.repositories.FeedbackRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import br.ufc.crateus.madacarudev.country_town_paths.exceptions.EntityConflictException;
 import br.ufc.crateus.madacarudev.country_town_paths.exceptions.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 
@@ -48,7 +46,7 @@ public class FeedbackService {
     return regionOutputDto;
   }
 
-  public void create(CreateFeedbackDto feedback) throws EntityConflictException{
+  public void create(CreateFeedbackDto feedback) {
     UUID uuid = UUID.randomUUID();
 
     FeedbackModel feedbackCreate = new FeedbackModel(
