@@ -1,5 +1,6 @@
 package br.ufc.crateus.madacarudev.country_town_paths.dtos.input;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 import lombok.Getter;
@@ -15,6 +16,7 @@ public class CreateFeedbackDto {
     private String surname;
 
     @NotBlank
+    @Email
     private String email;
 
     @NotBlank

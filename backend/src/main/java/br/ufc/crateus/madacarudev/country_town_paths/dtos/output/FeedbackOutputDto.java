@@ -5,8 +5,8 @@ import java.util.UUID;
 import javax.validation.constraints.NotBlank;
 
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
@@ -21,6 +21,9 @@ public class FeedbackOutputDto {
 
     @NotBlank
     public String surname;
+
+    @NotBlank
+    public String email;
 
     @NotBlank
     public String message;
