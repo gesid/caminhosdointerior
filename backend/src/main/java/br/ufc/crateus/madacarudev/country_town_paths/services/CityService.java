@@ -41,6 +41,15 @@ public class CityService {
         return citiesOutputDto;
     }
 
+    public List<CityOutputDto> getCitiesByRegion(UUID idRegion) throws EntityNotFoundException{
+        List<CityModel> cities = cityRepository.getByRegion(idRegion).orElse(new ArrayList<>());
+        List<CityOutputDto> citiesOutput = new ArrayList<CityOutputDto>();
+        for (CityModel city : cities) {
+            citiesOutput.add(modelMapper.map(city,CityOutputDto.class));
+        }
+        return citiesOutput;
+    }
+    
     public CityOutputDto getCityById(UUID id) throws EntityNotFoundException {
         CityModel cityModel = cityRepository.findById(id).orElse(null);
         checkIfNotExistisCityById(cityModel, id);
@@ -75,14 +84,6 @@ public class CityService {
         cityModel.setRegion(updatedCity.getRegion());
 
         cityRepository.save(cityModel);
-    }
-    public List<CityOutputDto> getCitiesByRegion(UUID idRegion) throws EntityNotFoundException{
-        List<CityModel> cities = cityRepository.getByRegion(idRegion).orElse(new ArrayList<>());
-        List<CityOutputDto> citiesOutput = new ArrayList<CityOutputDto>();
-        for (CityModel city : cities) {
-            citiesOutput.add(modelMapper.map(city,CityOutputDto.class));
-        }
-        return citiesOutput;
     }
 
     public void deleteCity(UUID id) {
