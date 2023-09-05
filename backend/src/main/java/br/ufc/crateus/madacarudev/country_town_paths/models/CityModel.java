@@ -11,6 +11,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.GeneratedValue;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,6 +22,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class CityModel {
   @Id
   @GeneratedValue
@@ -43,4 +45,10 @@ public class CityModel {
   @OneToMany(mappedBy = "city")
   private List<TouristLocationModel> location;
 
+  public CityModel(String name, String imageBannerUrl, String description, RegionModel region){
+    this.name = name;
+    this.description = description;
+    this.imageBannerUrl = imageBannerUrl;
+    this.region = region;
+  }
 }
