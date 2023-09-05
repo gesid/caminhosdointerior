@@ -5,7 +5,6 @@ import br.ufc.crateus.madacarudev.country_town_paths.dtos.input.UpdateCityDto;
 import br.ufc.crateus.madacarudev.country_town_paths.dtos.output.CityOutputDto;
 import br.ufc.crateus.madacarudev.country_town_paths.models.CityModel;
 import br.ufc.crateus.madacarudev.country_town_paths.models.TouristLocationModel;
-import br.ufc.crateus.madacarudev.country_town_paths.models.CityModel;
 import br.ufc.crateus.madacarudev.country_town_paths.repositories.CityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.Objects;
-import java.util.Optional;
 
 @Service
 public class CityService {
@@ -78,10 +76,13 @@ public class CityService {
 
         cityRepository.save(cityModel);
     }
-    public List<CityModel> getCitiesByRegion(UUID idRegion) throws EntityNotFoundException{
-        return cityRepository.getByRegion(idRegion).orElse(new ArrayList<>());
-
-        
+    public List<CityOutputDto> getCitiesByRegion(UUID idRegion) throws EntityNotFoundException{
+        List<CityModel> cities = cityRepository.getByRegion(idRegion).orElse(new ArrayList<>());
+        List<CityOutputDto> citiesOutput = new ArrayList<CityOutputDto>();
+        for (CityModel city : cities) {
+            citiesOutput.add(modelMapper.map(city,CityOutputDto.class));
+        }
+        return citiesOutput;
     }
 
     public void deleteCity(UUID id) {
