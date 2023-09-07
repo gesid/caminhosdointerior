@@ -27,11 +27,11 @@ public class EventModel {
     @Column(nullable = false)
     private String name;
 
-    @Column(name="date_initial", nullable = false)
-    private Date dateInitial;
+    @Column(name="start_date", nullable = false)
+    private Date startDate;
 
-    @Column(name="date_final", nullable = false)
-    private Date dateFinal;
+    @Column(name="end_date", nullable = false)
+    private Date endDate;
 
     @ManyToOne()
     @JoinColumn(name="category_id", nullable=false)
