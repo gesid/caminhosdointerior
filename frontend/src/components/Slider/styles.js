@@ -36,7 +36,7 @@ export const Cards = styled.div`
 export const CardContainer = styled.div`
   display: grid;
   place-items: center;
-  min-height: 18.5rem;
+  min-height: 15rem;
   min-width: 25%;
   background-image: url(${(props) => props.background});
   background-color: rgba(0, 0, 0, 0.4);

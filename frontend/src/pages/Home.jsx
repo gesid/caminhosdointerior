@@ -6,9 +6,13 @@ import Dining from "../assets/dining.svg";
 
 import { Search } from "../components/Search";
 import { Slider } from "../components/Slider";
+import Footer from "../components/footer/Footer";
+
 import cards from "../data/cards";
 
 import * as S from "../styles/homeStyles";
+import { useEffect } from "react";
+import { useCurrentStep } from "../context/CurrentStep.context.";
 
 const sliders = [
   {
@@ -34,6 +38,12 @@ const sliders = [
 ];
 
 export const Home = () => {
+  const [currentStep, setCurrentStep] = useCurrentStep();
+
+  useEffect(() => {
+    setCurrentStep(1);
+  }, []);
+
   return (
     <>
       <S.Header>
@@ -45,6 +55,7 @@ export const Home = () => {
           <Slider {...slider} key={slider.title} />
         ))}
       </S.Events>
+      <Footer />
     </>
   );
 };
