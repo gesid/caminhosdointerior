@@ -26,39 +26,39 @@ public class CityController implements CityControllerOpenApi {
     private CityService cityService;
 
     @GetMapping
-    public ResponseEntity<List<CityOutputDto>> getAllCities() {
-        List<CityOutputDto> cities = cityService.getAllCities();
+    public ResponseEntity<List<CityOutputDto>> getAll() {
+        List<CityOutputDto> cities = cityService.getAll();
         return ResponseEntity.ok(cities);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CityOutputDto> getCityById(@PathVariable UUID id) throws EntityNotFoundException{
-        CityOutputDto city = cityService.getCityById(id);
+    public ResponseEntity<CityOutputDto> getById(@PathVariable UUID id) throws EntityNotFoundException{
+        CityOutputDto city = cityService.getById(id);
         return ResponseEntity.ok(city);
     }
     @GetMapping("/{idRegion}")
-    public ResponseEntity<List<CityOutputDto>> getCitiesByRegion(@PathVariable UUID idRegion) throws EntityNotFoundException{
-        List<CityOutputDto> cities = cityService.getCitiesByRegion(idRegion);
+    public ResponseEntity<List<CityOutputDto>> getByRegion(@PathVariable UUID idRegion) throws EntityNotFoundException{
+        List<CityOutputDto> cities = cityService.getByRegion(idRegion);
         return ResponseEntity.ok(cities);
     }
 
     @PostMapping
     public ResponseEntity<InformativeMessageOutputDto> create(@Valid @RequestBody CreateCityDto city) throws EntityConflictException{
         cityService.create(city);
-        InformativeMessageOutputDto message = new InformativeMessageOutputDto("Região criada com sucesso.");
+        InformativeMessageOutputDto message = new InformativeMessageOutputDto("Cidade criada com sucesso.");
         return ResponseEntity.status(HttpStatus.CREATED).body(message);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<InformativeMessageOutputDto> update(@Valid @RequestBody UpdateCityDto city, @PathVariable UUID id) throws EntityNotFoundException{
         cityService.update(id, city);
-        InformativeMessageOutputDto message = new InformativeMessageOutputDto("Região atualizada com sucesso.");
+        InformativeMessageOutputDto message = new InformativeMessageOutputDto("Cidade atualizada com sucesso.");
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCity(@PathVariable UUID id) {
-        cityService.deleteCity(id);
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
+        cityService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

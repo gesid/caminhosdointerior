@@ -16,20 +16,20 @@ import br.ufc.crateus.madacarudev.country_town_paths.exceptions.EntityNotFoundEx
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
-@Api(tags = { SwaggerConfig.REGION_TAG })
+@Api(tags = { SwaggerConfig.CITY_TAG })
 public interface CityControllerOpenApi {
 
   @ApiOperation(value = "Retorna todas as cidades")
   @GetMapping("/cities")
-  public ResponseEntity<List<CityOutputDto>> getAllCities();
+  public ResponseEntity<List<CityOutputDto>> getAll();
 
   @ApiOperation(value = "Busca uma cidade por id")
   @GetMapping("/cities/{id}")
-  public ResponseEntity<CityOutputDto> getCityById(@PathVariable UUID id) throws EntityNotFoundException, BadRequestException;
+  public ResponseEntity<CityOutputDto> getById(@PathVariable UUID id) throws EntityNotFoundException, BadRequestException;
 
   @ApiOperation(value = "Busca cidades de uma determinada região")
   @GetMapping("/cities/{id}")
-  public ResponseEntity<List<CityOutputDto>> getCitiesByRegion(@PathVariable UUID idRegion) throws EntityNotFoundException, BadRequestException;
+  public ResponseEntity<List<CityOutputDto>> getByRegion(@PathVariable UUID idRegion) throws EntityNotFoundException, BadRequestException;
 
   @ApiOperation(value = "Cria uma cidade")
   @PostMapping("/cities")
@@ -41,5 +41,5 @@ public interface CityControllerOpenApi {
 
   @ApiOperation(value = "Deleta uma cidade")
   @DeleteMapping("/cities/{id}")
-  public ResponseEntity<Void> deleteCity(@PathVariable UUID id) throws BadRequestException;
+  public ResponseEntity<Void> delete(@PathVariable UUID id) throws BadRequestException;
 }

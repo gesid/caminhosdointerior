@@ -30,7 +30,7 @@ public class CityService {
     @Autowired
     private CityRepository cityRepository;
 
-    public List<CityOutputDto> getAllCities() {
+    public List<CityOutputDto> getAll() {
         List<CityModel> citiesModel = cityRepository.findAll();
         List<CityOutputDto> citiesOutputDto = new ArrayList<CityOutputDto>();
 
@@ -41,7 +41,7 @@ public class CityService {
         return citiesOutputDto;
     }
 
-    public List<CityOutputDto> getCitiesByRegion(UUID idRegion) throws EntityNotFoundException{
+    public List<CityOutputDto> getByRegion(UUID idRegion) throws EntityNotFoundException{
         List<CityModel> cities = cityRepository.getByRegion(idRegion).orElse(new ArrayList<>());
         List<CityOutputDto> citiesOutput = new ArrayList<CityOutputDto>();
         for (CityModel city : cities) {
@@ -50,7 +50,7 @@ public class CityService {
         return citiesOutput;
     }
     
-    public CityOutputDto getCityById(UUID id) throws EntityNotFoundException {
+    public CityOutputDto getById(UUID id) throws EntityNotFoundException {
         CityModel cityModel = cityRepository.findById(id).orElse(null);
         checkIfNotExistisCityById(cityModel, id);
 
@@ -59,7 +59,7 @@ public class CityService {
         return cityOutputDto;
     }
 
-    public CityModel getCityByName(String name) {
+    public CityModel getByName(String name) {
         return cityRepository.findByName(name).orElse(null);
     }
 
@@ -86,13 +86,13 @@ public class CityService {
         cityRepository.save(cityModel);
     }
 
-    public void deleteCity(UUID id) {
+    public void delete(UUID id) {
         cityRepository.deleteById(id);
     }
 
     private void checkIfNotExistisCityById(CityModel existingCity,UUID id) throws EntityNotFoundException{
         if (Objects.isNull(existingCity)) {
-            String errorMessage = "Não existe região com o id: " + id + ".";
+            String errorMessage = "Não existe cidade com o id: " + id + ".";
             throw new EntityNotFoundException(errorMessage);
         }
     }
