@@ -20,6 +20,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class SwaggerConfig {
   public static final String HELLO_WORLD_TAG = "Hello World";
   public static final String REGION_TAG = "Região";
+  public static final String FEEDBACK_TAG = "Feedback";
 
   @Bean
   public Docket api() {
@@ -28,7 +29,7 @@ public class SwaggerConfig {
         .paths(PathSelectors.ant("/api/**"))
         .build().apiInfo(apiInfoMetaData())
         .tags(
-          new Tag(REGION_TAG, "Endpoints de Região")
+          new Tag(FEEDBACK_TAG, "Endpoints de Feedback")
         );
   }
 
