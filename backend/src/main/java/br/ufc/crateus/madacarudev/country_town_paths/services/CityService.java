@@ -41,8 +41,8 @@ public class CityService {
         return citiesOutputDto;
     }
 
-    public List<CityOutputDto> getByRegion(UUID idRegion) throws EntityNotFoundException{
-        List<CityModel> cities = cityRepository.getByRegion(idRegion).orElse(new ArrayList<>());
+    public List<CityOutputDto> getByRegion(UUID regionId) throws EntityNotFoundException{
+        List<CityModel> cities = cityRepository.getByRegion(regionId).orElse(new ArrayList<>());
         List<CityOutputDto> citiesOutput = new ArrayList<CityOutputDto>();
         for (CityModel city : cities) {
             citiesOutput.add(modelMapper.map(city,CityOutputDto.class));

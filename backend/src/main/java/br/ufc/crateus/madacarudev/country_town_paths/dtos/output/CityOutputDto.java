@@ -24,5 +24,5 @@ public class CityOutputDto {
     public String imageBannerUrl;
     public String description;
     public RegionModel region;
-    List<TouristLocationModel> location;
+    
 }
