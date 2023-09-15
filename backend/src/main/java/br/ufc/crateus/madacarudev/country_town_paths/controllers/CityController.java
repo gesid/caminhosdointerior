@@ -36,7 +36,7 @@ public class CityController implements CityControllerOpenApi {
         CityOutputDto city = cityService.getById(id);
         return ResponseEntity.ok(city);
     }
-    
+
     @GetMapping("/{regionId}")
     public ResponseEntity<List<CityOutputDto>> getByRegion(@PathVariable UUID regionId) throws EntityNotFoundException{
         List<CityOutputDto> cities = cityService.getByRegion(regionId);
@@ -54,12 +54,12 @@ public class CityController implements CityControllerOpenApi {
     public ResponseEntity<InformativeMessageOutputDto> update(@Valid @RequestBody UpdateCityDto city, @PathVariable UUID id) throws EntityNotFoundException{
         cityService.update(id, city);
         InformativeMessageOutputDto message = new InformativeMessageOutputDto("Cidade atualizada com sucesso.");
-        return new ResponseEntity<>(message, HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.OK).body(message);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable UUID id) {
         cityService.delete(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return ResponseEntity.noContent().build();
     }
 }
