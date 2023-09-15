@@ -36,9 +36,10 @@ public class CityController implements CityControllerOpenApi {
         CityOutputDto city = cityService.getById(id);
         return ResponseEntity.ok(city);
     }
-    @GetMapping("/{idRegion}")
-    public ResponseEntity<List<CityOutputDto>> getByRegion(@PathVariable UUID idRegion) throws EntityNotFoundException{
-        List<CityOutputDto> cities = cityService.getByRegion(idRegion);
+    
+    @GetMapping("/{regionId}")
+    public ResponseEntity<List<CityOutputDto>> getByRegion(@PathVariable UUID regionId) throws EntityNotFoundException{
+        List<CityOutputDto> cities = cityService.getByRegion(regionId);
         return ResponseEntity.ok(cities);
     }
 
