@@ -4,27 +4,20 @@ import br.ufc.crateus.madacarudev.country_town_paths.dtos.input.CreateFeedbackDt
 import br.ufc.crateus.madacarudev.country_town_paths.dtos.output.FeedbackOutputDto;
 import br.ufc.crateus.madacarudev.country_town_paths.models.FeedbackModel;
 import br.ufc.crateus.madacarudev.country_town_paths.repositories.FeedbackRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import br.ufc.crateus.madacarudev.country_town_paths.exceptions.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 import java.util.Objects;
 
 @Service
+@RequiredArgsConstructor
 public class FeedbackService {
-
   private final ModelMapper modelMapper;
-
-  public FeedbackService(ModelMapper modelMapper) {
-    this.modelMapper = modelMapper;
-  }
-
-  @Autowired
-  private FeedbackRepository feedbackRepository;
+  private final FeedbackRepository feedbackRepository;
 
   public List<FeedbackOutputDto> getAll() {
     List<FeedbackModel> feedbacksModel = feedbackRepository.findAll();
@@ -37,30 +30,19 @@ public class FeedbackService {
     return feedbackOutputDto;
   }
 
-  public FeedbackOutputDto getFeedbackById(UUID id) throws EntityNotFoundException {
+  public FeedbackOutputDto getFeedbackById(Long id) throws EntityNotFoundException {
     FeedbackModel feedbackModel = feedbackRepository.findById(id).orElse(null);
-    checkIfNotExistisFeedbackById(feedbackModel, id);
+    checkIfNotExistsFeedbackById(feedbackModel, id);
 
-    FeedbackOutputDto regionOutputDto = modelMapper.map(feedbackModel,FeedbackOutputDto.class);
-
-    return regionOutputDto;
+    return modelMapper.map(feedbackModel,FeedbackOutputDto.class);
   }
 
-  public void create(CreateFeedbackDto feedback) {
-    UUID uuid = UUID.randomUUID();
-
-    FeedbackModel feedbackCreate = new FeedbackModel(
-      uuid,
-      feedback.getName(),
-      feedback.getSurname(),
-      feedback.getEmail(),
-      feedback.getMessage()
-      );
-    
-      feedbackRepository.save(feedbackCreate);
+  public void create(CreateFeedbackDto input) {
+    FeedbackModel feedbackCreate = this.modelMapper.map(input, FeedbackModel.class);
+    feedbackRepository.save(feedbackCreate);
   }
 
-  private void checkIfNotExistisFeedbackById(FeedbackModel existingFeedback,UUID id) throws EntityNotFoundException{
+  private void checkIfNotExistsFeedbackById(FeedbackModel existingFeedback, Long id) throws EntityNotFoundException{
     if (Objects.isNull(existingFeedback)) {
         String errorMessage = "Não existe feedback com o id: " + id + ".";
         throw new EntityNotFoundException(errorMessage);

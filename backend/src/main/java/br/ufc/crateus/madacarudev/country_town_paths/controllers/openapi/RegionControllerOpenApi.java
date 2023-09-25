@@ -1,6 +1,5 @@
 package br.ufc.crateus.madacarudev.country_town_paths.controllers.openapi;
 
-import java.util.UUID;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +24,7 @@ public interface RegionControllerOpenApi {
 
   @ApiOperation(value = "Busca uma região por id")
   @GetMapping("/regions/{id}")
-  public ResponseEntity<RegionOutputDto> getRegionById(@PathVariable UUID id) throws EntityNotFoundException, BadRequestException;
+  public ResponseEntity<RegionOutputDto> getRegionById(@PathVariable Long id) throws EntityNotFoundException, BadRequestException;
 
   @ApiOperation(value = "Cria uma região")
   @PostMapping("/regions")
@@ -33,9 +32,9 @@ public interface RegionControllerOpenApi {
   
   @ApiOperation(value = "Atualiza uma região")
   @PutMapping("/regions/{id}")
-  public ResponseEntity<InformativeMessageOutputDto> update(@RequestBody UpdateRegionDto region, @PathVariable UUID id) throws EntityNotFoundException, BadRequestException;
+  public ResponseEntity<InformativeMessageOutputDto> update(@RequestBody UpdateRegionDto region, @PathVariable Long id) throws EntityNotFoundException, BadRequestException;
 
   @ApiOperation(value = "Deleta uma região")
   @DeleteMapping("/regions/{id}")
-  public ResponseEntity<Void> deleteRegion(@PathVariable UUID id) throws BadRequestException;
+  public ResponseEntity<Void> deleteRegion(@PathVariable Long id) throws BadRequestException;
 }

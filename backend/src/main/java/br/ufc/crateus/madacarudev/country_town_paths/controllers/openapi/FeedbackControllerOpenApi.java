@@ -1,6 +1,5 @@
 package br.ufc.crateus.madacarudev.country_town_paths.controllers.openapi;
 
-import java.util.UUID;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +22,7 @@ public interface FeedbackControllerOpenApi {
 
   @ApiOperation(value = "Busca um feedback por id")
   @GetMapping("/feedbacks/{id}")
-  public ResponseEntity<FeedbackOutputDto> getFeedbackById(@PathVariable UUID id) throws EntityNotFoundException, BadRequestException;
+  public ResponseEntity<FeedbackOutputDto> getFeedbackById(@PathVariable Long id) throws EntityNotFoundException, BadRequestException;
 
   @ApiOperation(value = "Cria um feedback")
   @PostMapping("/feedbacks")
