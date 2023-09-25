@@ -1,14 +1,9 @@
 package br.ufc.crateus.madacarudev.country_town_paths.models;
 
-import java.util.Date;
-import java.util.UUID;
+import java.time.LocalDateTime;
+import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,31 +15,34 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class EventModel {
-    @Id
-    @Column(unique = true,updatable = false, columnDefinition = "BINARY(16)")
-    private UUID id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    @Column(nullable = false)
-    private String name;
+  @Column(nullable = false)
+  private String name;
 
-    @Column(name="start_date", nullable = false)
-    private Date startDate;
+  @Column(nullable = false)
+  private String description;
 
-    @Column(name="end_date", nullable = false)
-    private Date endDate;
+  @Column(name = "banner_image", nullable = false)
+  private String bannerImage;
 
-    @ManyToOne()
-    @JoinColumn(name="category_id", nullable=false)
-    private TouristAttractionCategoryModel touristAttractionCategory;
+  @Column(name = "start_date", nullable = false)
+  private LocalDateTime startDate;
 
-    @ManyToOne()
-    @JoinColumn(name="city_id", nullable=false)
-    private CityModel city;
+  @Column(name = "end_date", nullable = false)
+  private LocalDateTime endDate;
 
-    @Column(name="image_banner", nullable = false)
-    private String imageBanner;
+  @ManyToOne()
+  @JoinColumn(name = "category_id", nullable = false)
+  private TouristAttractionCategoryModel touristAttractionCategory;
 
-    @Column(nullable = false)
-    private String description;
+  @ManyToOne()
+  @JoinColumn(name = "city_id", nullable = false)
+  private CityModel city;
+
+  @OneToMany(mappedBy = "event", cascade = CascadeType.REMOVE)
+  private List<EventImageModel> previewImages;
 }
 

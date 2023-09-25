@@ -1,14 +1,12 @@
 package br.ufc.crateus.madacarudev.country_town_paths.models;
-import java.util.UUID;
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+
+import javax.persistence.*;
+
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+
 @Getter
 @Setter
 @Entity
@@ -17,9 +15,8 @@ import lombok.Getter;
 @NoArgsConstructor
 public class FeedbackModel {
   @Id
-  @GeneratedValue
-  @Column(unique = true, updatable = false, columnDefinition = "BINARY(16)")
-  private UUID id;
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
   @Column(nullable = false)
   public String name;
