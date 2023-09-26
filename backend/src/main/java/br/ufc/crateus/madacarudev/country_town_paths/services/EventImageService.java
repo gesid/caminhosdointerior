@@ -22,7 +22,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class EventImageService {
   private final EventImageRepository eventImageRepository;
-  private final IStorageService storageService;
+  private final LocalStorageService storageService;
 
   public EventImageModel getById(Long id) throws EntityNotFoundException {
     Optional<EventImageModel> searchedEventImage = this.eventImageRepository.findById(id);

@@ -1,8 +1,7 @@
 package br.ufc.crateus.madacarudev.country_town_paths.services;
 
 import br.ufc.crateus.madacarudev.country_town_paths.exceptions.FileProcessingException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import br.ufc.crateus.madacarudev.country_town_paths.services.interfaces.IStorageService;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,9 +14,8 @@ import java.nio.file.StandardCopyOption;
 import java.util.*;
 
 @Service
+@RequiredArgsConstructor
 public class LocalStorageService implements IStorageService {
-  @Autowired
-  private ServletWebServerApplicationContext webServerAppContext;
 
   private String getFileUrl(String directory, String filename) {
     String serverUrl = this.getServerUrl();
@@ -118,9 +116,6 @@ public class LocalStorageService implements IStorageService {
   }
 
   private String getServerUrl(){
-    final int SERVER_PORT = this.webServerAppContext.getWebServer().getPort();
-    String serverUrl = "http://localhost:".concat(String.valueOf(SERVER_PORT));
-
-    return serverUrl;
+    return "http://localhost:8080";
   }
 }
