@@ -21,5 +21,8 @@ public class TouristAttractionCategoryModel {
   private String name;
 
   @OneToMany(mappedBy = "category")
-  private List<TouristLocationModel> location;
+  private List<TouristLocationModel> locations;
+
+  @OneToMany(mappedBy = "touristAttractionCategory")
+  private List<EventModel> events;
 }
