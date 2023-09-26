@@ -22,6 +22,7 @@ public class SwaggerConfig {
   public static final String REGION_TAG = "Região";
   public static final String FEEDBACK_TAG = "Feedback";
   public static final String EVENT_TAG = "Eventos";
+  public static final String TOURIST_ATTRACTION_CATEGORY_TAG = "Categorias de atrações turísticas";
 
   @Bean
   public Docket api() {
@@ -31,7 +32,8 @@ public class SwaggerConfig {
         .build().apiInfo(apiInfoMetaData())
         .tags(
           new Tag(FEEDBACK_TAG, "Endpoints de Feedback"),
-          new Tag(EVENT_TAG, "Endpoints de Eventos")
+          new Tag(EVENT_TAG, "Endpoints de Eventos"),
+          new Tag(TOURIST_ATTRACTION_CATEGORY_TAG, "Endpoints de Categorias de Atrações Turísticas")
         );
   }
 
