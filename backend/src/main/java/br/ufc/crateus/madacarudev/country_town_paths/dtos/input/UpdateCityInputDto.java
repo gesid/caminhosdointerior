@@ -9,7 +9,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CreateCityDto {
+public class UpdateCityInputDto {
     @NotBlank
     private String name;
     private String imageBannerUrl;

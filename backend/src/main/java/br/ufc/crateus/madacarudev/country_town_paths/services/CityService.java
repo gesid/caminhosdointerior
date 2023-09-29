@@ -1,7 +1,7 @@
 package br.ufc.crateus.madacarudev.country_town_paths.services;
 
-import br.ufc.crateus.madacarudev.country_town_paths.dtos.input.CreateCityDto;
-import br.ufc.crateus.madacarudev.country_town_paths.dtos.input.UpdateCityDto;
+import br.ufc.crateus.madacarudev.country_town_paths.dtos.input.CreateCityInputDto;
+import br.ufc.crateus.madacarudev.country_town_paths.dtos.input.UpdateCityInputDto;
 import br.ufc.crateus.madacarudev.country_town_paths.dtos.output.CityOutputDto;
 import br.ufc.crateus.madacarudev.country_town_paths.models.CityModel;
 import br.ufc.crateus.madacarudev.country_town_paths.models.RegionModel;
@@ -67,7 +67,7 @@ public class CityService {
         return cityRepository.findByName(name).orElse(null);
     }
 
-    public void create(CreateCityDto city) throws EntityConflictException, EntityNotFoundException{
+    public void create(CreateCityInputDto city) throws EntityConflictException, EntityNotFoundException{
         UUID uuid = UUID.randomUUID();
         List<TouristLocationModel> location = new ArrayList<TouristLocationModel>();
 
@@ -85,7 +85,7 @@ public class CityService {
         cityRepository.save(cityCreate);
     }
 
-    public void update(UUID id, UpdateCityDto city) throws EntityNotFoundException{
+    public void update(UUID id, UpdateCityInputDto city) throws EntityNotFoundException{
         CityModel cityModel = cityRepository.findById(id).orElse(null);
 
         checkIfNotExistisCityById(cityModel, id);

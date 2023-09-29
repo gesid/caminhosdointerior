@@ -6,8 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import br.ufc.crateus.madacarudev.country_town_paths.configs.SwaggerConfig;
-import br.ufc.crateus.madacarudev.country_town_paths.dtos.input.CreateCityDto;
-import br.ufc.crateus.madacarudev.country_town_paths.dtos.input.UpdateCityDto;
+import br.ufc.crateus.madacarudev.country_town_paths.dtos.input.CreateCityInputDto;
+import br.ufc.crateus.madacarudev.country_town_paths.dtos.input.UpdateCityInputDto;
 import br.ufc.crateus.madacarudev.country_town_paths.dtos.output.InformativeMessageOutputDto;
 import br.ufc.crateus.madacarudev.country_town_paths.dtos.output.CityOutputDto;
 import br.ufc.crateus.madacarudev.country_town_paths.exceptions.BadRequestException;
@@ -33,11 +33,11 @@ public interface CityControllerOpenApi {
 
   @ApiOperation(value = "Cria uma cidade")
   @PostMapping("/cities")
-  public ResponseEntity<InformativeMessageOutputDto> create(@RequestBody CreateCityDto city)  throws EntityConflictException, BadRequestException, EntityNotFoundException;  
+  public ResponseEntity<InformativeMessageOutputDto> create(@RequestBody CreateCityInputDto city)  throws EntityConflictException, BadRequestException, EntityNotFoundException;  
   
   @ApiOperation(value = "Atualiza uma cidade")
   @PutMapping("/cities/{id}")
-  public ResponseEntity<InformativeMessageOutputDto> update(@RequestBody UpdateCityDto city, @PathVariable UUID id) throws EntityNotFoundException, BadRequestException;
+  public ResponseEntity<InformativeMessageOutputDto> update(@RequestBody UpdateCityInputDto city, @PathVariable UUID id) throws EntityNotFoundException, BadRequestException;
 
   @ApiOperation(value = "Deleta uma cidade")
   @DeleteMapping("/cities/{id}")

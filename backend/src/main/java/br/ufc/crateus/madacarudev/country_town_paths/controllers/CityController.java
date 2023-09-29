@@ -11,8 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import br.ufc.crateus.madacarudev.country_town_paths.controllers.openapi.CityControllerOpenApi;
-import br.ufc.crateus.madacarudev.country_town_paths.dtos.input.CreateCityDto;
-import br.ufc.crateus.madacarudev.country_town_paths.dtos.input.UpdateCityDto;
+import br.ufc.crateus.madacarudev.country_town_paths.dtos.input.CreateCityInputDto;
+import br.ufc.crateus.madacarudev.country_town_paths.dtos.input.UpdateCityInputDto;
 import br.ufc.crateus.madacarudev.country_town_paths.dtos.output.InformativeMessageOutputDto;
 import br.ufc.crateus.madacarudev.country_town_paths.dtos.output.CityOutputDto;
 import br.ufc.crateus.madacarudev.country_town_paths.exceptions.EntityConflictException;
@@ -44,14 +44,14 @@ public class CityController implements CityControllerOpenApi {
     }
 
     @PostMapping
-    public ResponseEntity<InformativeMessageOutputDto> create(@Valid @RequestBody CreateCityDto city) throws EntityConflictException, EntityNotFoundException{
+    public ResponseEntity<InformativeMessageOutputDto> create(@Valid @RequestBody CreateCityInputDto city) throws EntityConflictException, EntityNotFoundException{
         cityService.create(city);
         InformativeMessageOutputDto message = new InformativeMessageOutputDto("Cidade criada com sucesso.");
         return ResponseEntity.status(HttpStatus.CREATED).body(message);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<InformativeMessageOutputDto> update(@Valid @RequestBody UpdateCityDto city, @PathVariable UUID id) throws EntityNotFoundException{
+    public ResponseEntity<InformativeMessageOutputDto> update(@Valid @RequestBody UpdateCityInputDto city, @PathVariable UUID id) throws EntityNotFoundException{
         cityService.update(id, city);
         InformativeMessageOutputDto message = new InformativeMessageOutputDto("Cidade atualizada com sucesso.");
         return ResponseEntity.status(HttpStatus.OK).body(message);
