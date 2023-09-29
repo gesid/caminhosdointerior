@@ -33,7 +33,7 @@ public interface CityControllerOpenApi {
 
   @ApiOperation(value = "Cria uma cidade")
   @PostMapping("/cities")
-  public ResponseEntity<InformativeMessageOutputDto> create(@RequestBody CreateCityDto city)  throws EntityConflictException, BadRequestException;  
+  public ResponseEntity<InformativeMessageOutputDto> create(@RequestBody CreateCityDto city)  throws EntityConflictException, BadRequestException, EntityNotFoundException;  
   
   @ApiOperation(value = "Atualiza uma cidade")
   @PutMapping("/cities/{id}")

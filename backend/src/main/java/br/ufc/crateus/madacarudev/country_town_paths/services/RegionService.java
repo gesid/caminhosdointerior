@@ -78,6 +78,13 @@ public class RegionService {
         regionRepository.deleteById(id);
     }
 
+    public RegionModel getRegionModelById(UUID id) throws EntityNotFoundException {
+        RegionModel regionModel = regionRepository.findById(id).orElse(null);
+        checkIfNotExistisRegionById(regionModel, id);
+
+        return regionModel;
+    }
+
     private void checkIfExistisOtherRegionSameName(RegionModel existingRegion) throws EntityConflictException{
         if(Objects.nonNull(existingRegion)){
             String errorMessage = "Já existe outra região com o nome: " + existingRegion.getName() + ".";

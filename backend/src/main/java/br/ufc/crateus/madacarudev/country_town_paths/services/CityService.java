@@ -4,6 +4,7 @@ import br.ufc.crateus.madacarudev.country_town_paths.dtos.input.CreateCityDto;
 import br.ufc.crateus.madacarudev.country_town_paths.dtos.input.UpdateCityDto;
 import br.ufc.crateus.madacarudev.country_town_paths.dtos.output.CityOutputDto;
 import br.ufc.crateus.madacarudev.country_town_paths.models.CityModel;
+import br.ufc.crateus.madacarudev.country_town_paths.models.RegionModel;
 import br.ufc.crateus.madacarudev.country_town_paths.models.TouristLocationModel;
 import br.ufc.crateus.madacarudev.country_town_paths.repositories.CityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,9 @@ public class CityService {
 
     @Autowired
     private CityRepository cityRepository;
+
+    @Autowired
+    private RegionService regionService;
 
     public List<CityOutputDto> getAll() {
         List<CityModel> citiesModel = cityRepository.findAll();
@@ -63,25 +67,40 @@ public class CityService {
         return cityRepository.findByName(name).orElse(null);
     }
 
-    public void create(CreateCityDto city) throws EntityConflictException{
-
+    public void create(CreateCityDto city) throws EntityConflictException, EntityNotFoundException{
         UUID uuid = UUID.randomUUID();
         List<TouristLocationModel> location = new ArrayList<TouristLocationModel>();
-        CityModel cityCreate = new CityModel(uuid, city.getName(), city.getImageBannerUrl(), city.getDescription(), city.getRegion(), location);
+
+        UUID regionId = city.getRegionId();
+
+        RegionModel regionModel = regionService.getRegionModelById(regionId);
+
+        if (Objects.isNull(regionModel)) {
+            String errorMessage = "Não existe região com o id: " + regionId + ".";
+            throw new EntityNotFoundException(errorMessage);
+        }
+
+        CityModel cityCreate = new CityModel(uuid, city.getName(), city.getImageBannerUrl(), city.getDescription(), regionModel, location);
         
         cityRepository.save(cityCreate);
     }
 
     public void update(UUID id, UpdateCityDto city) throws EntityNotFoundException{
         CityModel cityModel = cityRepository.findById(id).orElse(null);
-        CityModel updatedCity = new CityModel(city.getName(), city.getImageBannerUrl(), city.getDescription(), city.getRegion());
 
         checkIfNotExistisCityById(cityModel, id);
-        
-        cityModel.setName(updatedCity.getName());
-        cityModel.setDescription(updatedCity.getDescription());
-        cityModel.setImageBannerUrl(updatedCity.getImageBannerUrl());
-        cityModel.setRegion(updatedCity.getRegion());
+
+        UUID regionId = city.getRegionId();
+
+        RegionModel regionModel = regionService.getRegionModelById(regionId);
+
+        if (Objects.isNull(regionModel)) {
+            String errorMessage = "Não existe região com o id: " + regionId + ".";
+            throw new EntityNotFoundException(errorMessage);
+        }
+
+        cityModel = modelMapper.map(city, CityModel.class);
+        cityModel.setRegion(regionModel);
 
         cityRepository.save(cityModel);
     }

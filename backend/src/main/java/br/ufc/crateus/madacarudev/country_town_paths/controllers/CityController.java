@@ -44,7 +44,7 @@ public class CityController implements CityControllerOpenApi {
     }
 
     @PostMapping
-    public ResponseEntity<InformativeMessageOutputDto> create(@Valid @RequestBody CreateCityDto city) throws EntityConflictException{
+    public ResponseEntity<InformativeMessageOutputDto> create(@Valid @RequestBody CreateCityDto city) throws EntityConflictException, EntityNotFoundException{
         cityService.create(city);
         InformativeMessageOutputDto message = new InformativeMessageOutputDto("Cidade criada com sucesso.");
         return ResponseEntity.status(HttpStatus.CREATED).body(message);
