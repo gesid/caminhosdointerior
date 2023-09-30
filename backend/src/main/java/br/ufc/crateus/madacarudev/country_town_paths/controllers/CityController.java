@@ -12,11 +12,14 @@ import org.springframework.web.bind.annotation.*;
 
 import br.ufc.crateus.madacarudev.country_town_paths.controllers.openapi.CityControllerOpenApi;
 import br.ufc.crateus.madacarudev.country_town_paths.dtos.input.CreateCityInputDto;
+import br.ufc.crateus.madacarudev.country_town_paths.dtos.input.UpdateCityImageBannerInputDto;
 import br.ufc.crateus.madacarudev.country_town_paths.dtos.input.UpdateCityInputDto;
 import br.ufc.crateus.madacarudev.country_town_paths.dtos.output.InformativeMessageOutputDto;
 import br.ufc.crateus.madacarudev.country_town_paths.dtos.output.CityOutputDto;
+import br.ufc.crateus.madacarudev.country_town_paths.exceptions.BusinessException;
 import br.ufc.crateus.madacarudev.country_town_paths.exceptions.EntityConflictException;
 import br.ufc.crateus.madacarudev.country_town_paths.exceptions.EntityNotFoundException;
+import br.ufc.crateus.madacarudev.country_town_paths.exceptions.FileProcessingException;
 import br.ufc.crateus.madacarudev.country_town_paths.services.CityService;
 
 @RestController
@@ -44,7 +47,7 @@ public class CityController implements CityControllerOpenApi {
     }
 
     @PostMapping
-    public ResponseEntity<InformativeMessageOutputDto> create(@Valid @RequestBody CreateCityInputDto city) throws EntityConflictException, EntityNotFoundException{
+    public ResponseEntity<InformativeMessageOutputDto> create(@Valid @RequestBody @ModelAttribute CreateCityInputDto city) throws EntityConflictException, EntityNotFoundException, FileProcessingException{
         cityService.create(city);
         InformativeMessageOutputDto message = new InformativeMessageOutputDto("Cidade criada com sucesso.");
         return ResponseEntity.status(HttpStatus.CREATED).body(message);
@@ -60,6 +63,29 @@ public class CityController implements CityControllerOpenApi {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable UUID id) {
         cityService.delete(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
+
+    @PatchMapping("/{id}/banner-image")
+    @Override
+    public ResponseEntity<Void> updateBannerImage(@PathVariable("id") UUID id, 
+    @Valid @ModelAttribute UpdateCityImageBannerInputDto bannerInputDto)
+     throws EntityNotFoundException, FileProcessingException {
+
+        this.cityService.updateBannerImage(bannerInputDto, id);
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+
+  @DeleteMapping("/{id}/imagesCity/{imageId}")
+  @Override
+  public ResponseEntity<Void> deleteImageCity(@PathVariable("id") UUID cityId,
+   @PathVariable("imageId") Long imageId) 
+   throws EntityNotFoundException, FileProcessingException, BusinessException {
+
+    this.cityService.deleteImageCity(cityId, imageId);
+    
+    return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+  }
 }

@@ -1,7 +1,7 @@
 package br.ufc.crateus.madacarudev.country_town_paths.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext;
+import br.ufc.crateus.madacarudev.country_town_paths.exceptions.FileProcessingException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import br.ufc.crateus.madacarudev.country_town_paths.services.interfaces.IStorageService;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,9 +14,8 @@ import java.nio.file.StandardCopyOption;
 import java.util.*;
 
 @Service
+@RequiredArgsConstructor
 public class LocalStorageService implements IStorageService {
-  @Autowired
-  private ServletWebServerApplicationContext webServerAppContext;
 
   private String getFileUrl(String directory, String filename) {
     String serverUrl = this.getServerUrl();
@@ -26,30 +25,43 @@ public class LocalStorageService implements IStorageService {
   }
 
   @Override
-  public String save(String directory, MultipartFile file) throws IOException {
+  public String save(String directory, MultipartFile file) throws FileProcessingException {
+    try (InputStream inputStream = file.getInputStream()) {
+      return this.trySave(directory, file, inputStream);
+    } catch (IOException exception) {
+      String message = String.format("Não foi possível salvar o arquivo pelo seguinte erro: %s", exception.getMessage());
+      throw new FileProcessingException(message);
+    }
+  }
+
+  private String trySave(String directory, MultipartFile file, InputStream inputStream) throws FileProcessingException, IOException {
     ArrayList<String> uploadDirectoryPathParts = this.getUploadFolderPathParts(directory);
     var uploadDirectoryPathPartsArray = Arrays.copyOf(uploadDirectoryPathParts.toArray(), uploadDirectoryPathParts.size(), String[].class);
-
     Path uploadPath = Paths.get("src", uploadDirectoryPathPartsArray);
 
+    this.createDirectoryIfNotExists(uploadPath);
+
+    String trimmedOriginalFilename = Objects.requireNonNull(file.getOriginalFilename()).replaceAll(" ", "-");
+    Path filePath = uploadPath.resolve(UUID.randomUUID() + "-" + trimmedOriginalFilename);
+    Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
+
+    String filename = filePath.getFileName().toString();
+    return this.getFileUrl(directory, filename);
+  }
+
+  private void createDirectoryIfNotExists(Path uploadPath) throws FileProcessingException {
     if (!Files.exists(uploadPath)) {
-      Files.createDirectories(uploadPath);
-    }
-
-    try (InputStream inputStream = file.getInputStream()) {
-      String trimmedOriginalFilename = Objects.requireNonNull(file.getOriginalFilename()).replaceAll(" ", "-");
-      Path filePath = uploadPath.resolve(UUID.randomUUID() + "-" + trimmedOriginalFilename);
-      Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
-
-      String filename = filePath.getFileName().toString();
-      return this.getFileUrl(directory, filename);
-    } catch (IOException ioe) {
-      throw new IOException("Could not save file: " + file.getOriginalFilename(), ioe);
+      try {
+        Files.createDirectories(uploadPath);
+      } catch (IOException exception) {
+        String message = String.format("Erro ao criar local de armazenamento do arquivo: %s", exception.getMessage());
+        throw new FileProcessingException(message);
+      }
     }
   }
 
   @Override
-  public void delete(String resourceUrl) throws IOException {
+  public void delete(String resourceUrl) throws FileProcessingException {
     ArrayList<String> uploadDirectoryPathParts = this.getUploadFolderPathParts("");
 
     String serverUrl = this.getServerUrl();
@@ -61,7 +73,13 @@ public class LocalStorageService implements IStorageService {
     var uploadDirectoryPathPartsArray = Arrays.copyOf(uploadDirectoryPathParts.toArray(), uploadDirectoryPathParts.size(), String[].class);
 
     Path uploadPath = Paths.get("src", uploadDirectoryPathPartsArray);
-    Files.delete(uploadPath);
+
+    try {
+      Files.delete(uploadPath);
+    } catch (IOException exception) {
+      String message = String.format("Não foi possível remover o arquivo pelo seguinte erro: %s", exception.getMessage());
+      throw new FileProcessingException(message);
+    }
   }
 
   private ArrayList<String> getUploadFolderPathParts(String directory){
@@ -98,9 +116,6 @@ public class LocalStorageService implements IStorageService {
   }
 
   private String getServerUrl(){
-    final int SERVER_PORT = this.webServerAppContext.getWebServer().getPort();
-    String serverUrl = "http://localhost:".concat(String.valueOf(SERVER_PORT));
-
-    return serverUrl;
+    return "http://localhost:8080";
   }
 }

@@ -15,9 +15,6 @@ public class UpdateCityInputDto {
     private String name;
 
     @NotBlank
-    private String imageBannerUrl;
-
-    @NotBlank
     private String description;
 
     @NotNull
