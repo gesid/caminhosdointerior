@@ -6,21 +6,21 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import br.ufc.crateus.madacarudev.country_town_paths.controllers.openapi.TouristAttractionControllerOpenApi;
-import br.ufc.crateus.madacarudev.country_town_paths.dtos.output.SampleTouristAttractionCategoryWithEventsAndLocationOutputDto;
-import br.ufc.crateus.madacarudev.country_town_paths.services.TouristAttractionCategoryService;
+import br.ufc.crateus.madacarudev.country_town_paths.dtos.output.TouristAttractionsWithCategoriesOutputDto;
+import br.ufc.crateus.madacarudev.country_town_paths.services.TouristAttractionService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/tourist-attraction")
 @RequiredArgsConstructor
 public class TouristAttractionController implements TouristAttractionControllerOpenApi{
-  private final TouristAttractionCategoryService touristAttractionCategoryService;
+  private final TouristAttractionService touristAttractionService;
 
   @GetMapping("/tourist-attractions-with-categories")
   @Override
-  public ResponseEntity<List<SampleTouristAttractionCategoryWithEventsAndLocationOutputDto>> getAllSampleTouristAttractionCategory() {
-    List<SampleTouristAttractionCategoryWithEventsAndLocationOutputDto> touristAttractionWithCategory = 
-    this.touristAttractionCategoryService.getAllSampleTouristAttractionCategory();
+  public ResponseEntity<List<TouristAttractionsWithCategoriesOutputDto>> getAllSampleTouristAttractionCategory() {
+    List<TouristAttractionsWithCategoriesOutputDto> touristAttractionWithCategory = 
+    this.touristAttractionService.getAllSampleTouristAttractionCategory();
 
     return ResponseEntity.ok(touristAttractionWithCategory);
   }

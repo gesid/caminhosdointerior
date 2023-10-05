@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class EventOutputDto {
+public class SampleEventOutputDto {
   private Long id;
   public String name;
   public String bannerImage;

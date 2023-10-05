@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
-import br.ufc.crateus.madacarudev.country_town_paths.dtos.output.EventOutputDto;
+import br.ufc.crateus.madacarudev.country_town_paths.dtos.output.SampleEventOutputDto;
 import br.ufc.crateus.madacarudev.country_town_paths.models.EventModel;
 import lombok.AllArgsConstructor;
 
@@ -15,10 +15,10 @@ import lombok.AllArgsConstructor;
 public class EventMapper {
   private final ModelMapper modelMapper;
 
-  public List<EventOutputDto> convertModelToSampleOutputDtoCollection(List<EventModel> events){
+  public List<SampleEventOutputDto> convertModelToSampleOutputDtoCollection(List<EventModel> events){
     return events.stream().map(event -> modelMapper.map(
       event,
-      EventOutputDto.class)
+      SampleEventOutputDto.class)
     ).collect(Collectors.toList());
   }
 }

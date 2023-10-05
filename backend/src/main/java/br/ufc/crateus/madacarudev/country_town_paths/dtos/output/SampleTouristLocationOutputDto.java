@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class TouristLocationOutputDto {
+public class SampleTouristLocationOutputDto {
   private Long id;
   public String name;
   public String bannerImage;

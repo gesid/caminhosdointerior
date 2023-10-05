@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
-import br.ufc.crateus.madacarudev.country_town_paths.dtos.output.TouristLocationOutputDto;
+import br.ufc.crateus.madacarudev.country_town_paths.dtos.output.SampleTouristLocationOutputDto;
 import br.ufc.crateus.madacarudev.country_town_paths.models.TouristLocationModel;
 import lombok.AllArgsConstructor;
 
@@ -15,10 +15,10 @@ import lombok.AllArgsConstructor;
 public class TouristLocationMapper {
   private final ModelMapper modelMapper;
 
-  public List<TouristLocationOutputDto> convertModelToSampleOutputDtoCollection(List<TouristLocationModel> locations){
+  public List<SampleTouristLocationOutputDto> convertModelToSampleOutputDtoCollection(List<TouristLocationModel> locations){
     return locations.stream().map(location -> modelMapper.map(
       location,
-      TouristLocationOutputDto.class)
+      SampleTouristLocationOutputDto.class)
     ).collect(Collectors.toList());
   }
 }
