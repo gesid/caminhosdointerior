@@ -4,12 +4,14 @@ export const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 80%;
+  width: 100%;
   margin: 0 auto;
   background-color: ${(props) => props.theme.colors.orange};
   padding: 0.6rem 8.25rem;
   border-radius: 0px 0px 20px 20px;
   box-shadow: 0px 0.5rem 0.5rem 0px rgba(0, 0, 0, 0.25);
+  z-index: 999;
+  position: absolute;
 
   img {
     width: 12rem;
@@ -20,6 +22,7 @@ export const Actions = styled.ul`
   display: flex;
   align-items: center;
   gap: 1rem;
+  cursor: pointer;
 `;
 
 export const Option = styled.a`

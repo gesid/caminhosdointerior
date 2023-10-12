@@ -4,7 +4,7 @@ const INITIAL_STATE = {
   sertao: "",
   evento: "",
   texto: "",
-  cidade: ""
+  cidade: "",
 };
 
 const sidebarContext = createContext();
@@ -13,7 +13,8 @@ export const actionTypes = {
   UPDATE_SERTAO: "UPDATE_SERTAO",
   UPDATE_EVENTO: "UPDATE_EVENTO",
   UPDATE_TEXTO: "UPDATE_TEXTO",
-  UPDATE_CIDADE: "UPDATE_CIDADE"
+  UPDATE_CIDADE: "UPDATE_CIDADE",
+  CLEAR_FILTER: "CLEAR_FILTER",
 };
 
 const sidebarReducer = (state, action) => {
@@ -23,7 +24,9 @@ const sidebarReducer = (state, action) => {
     case actionTypes.UPDATE_EVENTO:
       return { ...state, evento: action.payload };
     case actionTypes.UPDATE_CIDADE:
-      return {...state, cidade: action.payload}
+      return { ...state, cidade: action.payload };
+    case actionTypes.CLEAR_FILTER:
+      return (state = null);
     default:
       return state;
   }

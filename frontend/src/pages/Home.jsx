@@ -13,6 +13,7 @@ import cards from "../data/cards";
 import * as S from "../styles/homeStyles";
 import { useEffect } from "react";
 import { useCurrentStep } from "../context/CurrentStep.context.";
+import { NavBar } from "../components/NavBar";
 
 const sliders = [
   {
@@ -38,7 +39,7 @@ const sliders = [
 ];
 
 export const Home = () => {
-  const [currentStep, setCurrentStep] = useCurrentStep();
+  const [_currentStep, setCurrentStep] = useCurrentStep();
 
   useEffect(() => {
     setCurrentStep(1);
@@ -46,6 +47,7 @@ export const Home = () => {
 
   return (
     <>
+      <NavBar />
       <S.Header>
         <S.Logo src={LogoWhite} alt="Logo caminhos do interior" />
         <Search />

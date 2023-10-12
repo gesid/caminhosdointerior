@@ -8,15 +8,19 @@ import { theme } from "./themes";
 
 import { NavBar } from "./components/NavBar";
 import { CurrentStepProvider } from "./context/CurrentStep.context.";
+import { SidebarProvider } from "./context/Sidebar.context";
+import Footer from "./components/footer/Footer";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <CurrentStepProvider>
-      <ThemeProvider theme={theme}>
-        <GlobalStyle />
-        <NavBar />
-        <RouterProvider router={route} />
-      </ThemeProvider>
+      <SidebarProvider>
+        <ThemeProvider theme={theme}>
+          <GlobalStyle />
+          <RouterProvider router={route} />
+
+        </ThemeProvider>
+      </SidebarProvider>
     </CurrentStepProvider>
   </React.StrictMode>
 );

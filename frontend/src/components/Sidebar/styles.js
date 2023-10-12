@@ -4,9 +4,9 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   padding: 8.25rem 2rem 0;
-  width: 20%;
-  height: 100vh;
   background-color: #f5a42e;
+  height: 100vh;
+  width: 20%;
 `;
 
 export const Title = styled.h1`
@@ -63,5 +63,5 @@ export const Option = styled.div`
   flex-direction: column;
   background-color: #fff;
   z-index: 999;
-  width: 17%;
+  width: 80%;
 `;
