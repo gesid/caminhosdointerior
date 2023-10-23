@@ -38,5 +38,5 @@ public class TouristLocationModel {
     private CityModel city;
 
     @OneToMany(mappedBy = "tourist_location", cascade = CascadeType.REMOVE)
-    private List<EventImageModel> previewImages;
+    private List<TouristLocationImageModel> previewImages;
 }
