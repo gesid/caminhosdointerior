@@ -1,5 +1,7 @@
 package br.ufc.crateus.madacarudev.country_town_paths.models;
 
+import java.util.List;
+
 import javax.persistence.*;
 
 import lombok.AllArgsConstructor;
@@ -34,4 +36,7 @@ public class TouristLocationModel {
     @ManyToOne
     @JoinColumn(name = "city_id", nullable = false)
     private CityModel city;
+
+    @OneToMany(mappedBy = "tourist_location", cascade = CascadeType.REMOVE)
+    private List<EventImageModel> previewImages;
 }
