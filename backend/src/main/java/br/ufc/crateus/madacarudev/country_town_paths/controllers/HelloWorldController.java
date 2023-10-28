@@ -16,7 +16,6 @@ import br.ufc.crateus.madacarudev.country_town_paths.dtos.input.UpdateHelloWorld
 @RestController
 @RequestMapping("api/hello-world")
 public class HelloWorldController implements HelloWorldOpenApi{
-
   @GetMapping
   public String getHelloWorldMessage(){
     return "Hello World";

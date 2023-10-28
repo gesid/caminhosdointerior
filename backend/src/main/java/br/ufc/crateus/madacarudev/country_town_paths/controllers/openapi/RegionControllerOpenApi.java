@@ -1,6 +1,5 @@
 package br.ufc.crateus.madacarudev.country_town_paths.controllers.openapi;
 
-import java.util.UUID;
 import java.util.List;
 
 import br.ufc.crateus.madacarudev.country_town_paths.dtos.output.CityOutputDto;
@@ -22,28 +21,17 @@ import io.swagger.annotations.ApiOperation;
 public interface RegionControllerOpenApi {
 
   @ApiOperation(value = "Retorna todas as regiões")
-  @GetMapping("/regions")
   public ResponseEntity<List<RegionOutputDto>> getAllRegions();
 
   @ApiOperation(value = "Busca uma região por id")
-  @GetMapping("/regions/{id}")
-  public ResponseEntity<RegionOutputDto> getRegionById(UUID id) throws EntityNotFoundException, BadRequestException;
-
-  @ApiOperation(value = "Busca cidades de uma determinada região")
-  @GetMapping("{id}/cities")
-  public ResponseEntity<List<CityOutputDto>> getAllCities(
-    @PathVariable UUID id
-  ) throws EntityNotFoundException, BadRequestException;
+  public ResponseEntity<RegionOutputDto> getRegionById(Long id) throws EntityNotFoundException, BadRequestException;
 
   @ApiOperation(value = "Cria uma região")
-  @PostMapping("/regions")
-  public ResponseEntity<InformativeMessageOutputDto> create(@RequestBody CreateRegionDto region)  throws EntityConflictException, BadRequestException;  
+  public ResponseEntity<InformativeMessageOutputDto> create(CreateRegionDto region)  throws EntityConflictException, BadRequestException;  
   
   @ApiOperation(value = "Atualiza uma região")
-  @PutMapping("/regions/{id}")
-  public ResponseEntity<InformativeMessageOutputDto> update(@RequestBody UpdateRegionDto region, @PathVariable UUID id) throws EntityNotFoundException, BadRequestException;
+  public ResponseEntity<InformativeMessageOutputDto> update(UpdateRegionDto region, Long id) throws EntityNotFoundException, BadRequestException;
 
   @ApiOperation(value = "Deleta uma região")
-  @DeleteMapping("/regions/{id}")
-  public ResponseEntity<Void> deleteRegion(@PathVariable UUID id) throws BadRequestException;
+  public ResponseEntity<Void> deleteRegion(Long id) throws BadRequestException;
 }

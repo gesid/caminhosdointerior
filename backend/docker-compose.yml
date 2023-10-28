@@ -1,0 +1,9 @@
+services:
+  country-town-paths-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: country-town-paths
+    ports:
+      - "8080:8080"
+    container_name: country-town-paths-api

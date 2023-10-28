@@ -1,15 +1,7 @@
 package br.ufc.crateus.madacarudev.country_town_paths.models;
 
 import java.util.List;
-import java.util.UUID;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
-
+import javax.persistence.*;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,12 +14,15 @@ import lombok.Setter;
 @Setter
 public class TouristAttractionCategoryModel {
   @Id
-  @Column(unique = true, updatable = false, columnDefinition = "BINARY(16)")
-  private UUID id;
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
   @Column(nullable = false)
   private String name;
 
   @OneToMany(mappedBy = "category")
-  private List<TouristLocationModel> location;
+  private List<TouristLocationModel> locations;
+
+  @OneToMany(mappedBy = "touristAttractionCategory")
+  private List<EventModel> events;
 }

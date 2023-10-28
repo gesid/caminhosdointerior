@@ -21,6 +21,9 @@ public class SwaggerConfig {
   public static final String HELLO_WORLD_TAG = "Hello World";
   public static final String REGION_TAG = "Região";
   public static final String CITY_TAG = "Cidade";
+  public static final String FEEDBACK_TAG = "Feedback";
+  public static final String EVENT_TAG = "Eventos";
+  public static final String TOURIST_ATTRACTION_CATEGORY_TAG = "Categorias de atrações turísticas";
 
   @Bean
   public Docket api() {
@@ -29,7 +32,11 @@ public class SwaggerConfig {
         .paths(PathSelectors.ant("/api/**"))
         .build().apiInfo(apiInfoMetaData())
         .tags(
-          new Tag(CITY_TAG, "Endpoints de Cidade")
+          new Tag(CITY_TAG, "Endpoints de Cidade"),
+          new Tag(CITY_TAG, "Endpoints de Regiões"),
+          new Tag(FEEDBACK_TAG, "Endpoints de Feedback"),
+          new Tag(EVENT_TAG, "Endpoints de Eventos"),
+          new Tag(TOURIST_ATTRACTION_CATEGORY_TAG, "Endpoints de Categorias de Atrações Turísticas")
         );
   }
 

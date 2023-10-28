@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ValidationFieldErrorOutputDto {
-    private String fieldName;
-    private String errorDescription;
+public class TouristAttractionCategoryOutputDto {
+  private Long id;
+  private String name;
 }
