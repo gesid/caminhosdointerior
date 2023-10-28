@@ -4,10 +4,12 @@ import br.ufc.crateus.madacarudev.country_town_paths.dtos.input.CreateCityInputD
 import br.ufc.crateus.madacarudev.country_town_paths.dtos.input.UpdateCityImageBannerInputDto;
 import br.ufc.crateus.madacarudev.country_town_paths.dtos.input.UpdateCityInputDto;
 import br.ufc.crateus.madacarudev.country_town_paths.dtos.output.CityOutputDto;
+import br.ufc.crateus.madacarudev.country_town_paths.dtos.output.DetailedCityOutputDto;
 import br.ufc.crateus.madacarudev.country_town_paths.models.CityModel;
 import br.ufc.crateus.madacarudev.country_town_paths.models.RegionModel;
 import br.ufc.crateus.madacarudev.country_town_paths.models.TouristLocationModel;
 import br.ufc.crateus.madacarudev.country_town_paths.repositories.CityRepository;
+import br.ufc.crateus.madacarudev.country_town_paths.utils.CityMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +31,7 @@ public class CityService {
   private final CityRepository cityRepository;
   private final RegionService regionService;
   private final CityImageService cityImageService;
+  private final CityMapper cityMapper;
 
   public List<CityOutputDto> getAll() {
     List<CityModel> citiesModel = cityRepository.findAll();
@@ -54,9 +57,9 @@ public class CityService {
     return citiesOutput;
   }
 
-  public CityOutputDto getOutputDtoById(Long id) throws EntityNotFoundException {
-    CityModel cityModel = this.getById(id);
-    return modelMapper.map(cityModel, CityOutputDto.class);
+  public DetailedCityOutputDto getDetailedById(Long id) throws EntityNotFoundException{
+    CityModel city = this.getById(id);
+    return this.cityMapper.convertModelToDetailedOutputDto(city);
   }
 
   public CityModel getById(Long id) throws EntityNotFoundException {

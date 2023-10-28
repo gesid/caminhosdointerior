@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import br.ufc.crateus.madacarudev.country_town_paths.dtos.output.DetailedCityOutputDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -29,18 +30,21 @@ public class CityController implements CityControllerOpenApi {
   private final CityService cityService;
 
   @GetMapping
+  @Override
   public ResponseEntity<List<CityOutputDto>> getAll() {
     List<CityOutputDto> cities = cityService.getAll();
     return ResponseEntity.ok(cities);
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<CityOutputDto> getById(@PathVariable Long id) throws EntityNotFoundException {
-    CityOutputDto city = cityService.getOutputDtoById(id);
+  @Override
+  public ResponseEntity<DetailedCityOutputDto> getById(@PathVariable Long id) throws EntityNotFoundException {
+    DetailedCityOutputDto city = this.cityService.getDetailedById(id);
     return ResponseEntity.ok(city);
   }
 
   @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+  @Override
   public ResponseEntity<InformativeMessageOutputDto> create(
     @Valid @ModelAttribute CreateCityInputDto city
   ) throws EntityConflictException, EntityNotFoundException, FileProcessingException {
@@ -51,6 +55,7 @@ public class CityController implements CityControllerOpenApi {
   }
 
   @PutMapping("/{id}")
+  @Override
   public ResponseEntity<InformativeMessageOutputDto> update(
     @Valid @RequestBody UpdateCityInputDto city,
     @PathVariable Long id
@@ -62,6 +67,7 @@ public class CityController implements CityControllerOpenApi {
   }
 
   @DeleteMapping("/{id}")
+  @Override
   public ResponseEntity<Void> delete(
     @PathVariable Long id
   ) throws EntityNotFoundException, FileProcessingException {
