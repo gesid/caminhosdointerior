@@ -4,7 +4,6 @@ import java.util.List;
 
 import br.ufc.crateus.madacarudev.country_town_paths.dtos.output.CityOutputDto;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 
 import br.ufc.crateus.madacarudev.country_town_paths.configs.SwaggerConfig;
 import br.ufc.crateus.madacarudev.country_town_paths.dtos.input.CreateRegionDto;
@@ -22,6 +21,8 @@ public interface RegionControllerOpenApi {
 
   @ApiOperation(value = "Retorna todas as regiões")
   public ResponseEntity<List<RegionOutputDto>> getAllRegions();
+  @ApiOperation(value = "Retorna todas as cidades da região")
+  public ResponseEntity<List<CityOutputDto>> getAllCities(Long id) throws EntityNotFoundException;
 
   @ApiOperation(value = "Busca uma região por id")
   public ResponseEntity<RegionOutputDto> getRegionById(Long id) throws EntityNotFoundException, BadRequestException;
@@ -33,5 +34,5 @@ public interface RegionControllerOpenApi {
   public ResponseEntity<InformativeMessageOutputDto> update(UpdateRegionDto region, Long id) throws EntityNotFoundException, BadRequestException;
 
   @ApiOperation(value = "Deleta uma região")
-  public ResponseEntity<Void> deleteRegion(Long id) throws BadRequestException;
+  public ResponseEntity<Void> deleteRegion(Long id) throws BadRequestException, EntityNotFoundException;
 }

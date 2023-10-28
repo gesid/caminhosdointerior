@@ -1,7 +1,6 @@
 package br.ufc.crateus.madacarudev.country_town_paths.models;
 
 import java.util.List;
-import java.util.UUID;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;

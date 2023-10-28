@@ -8,7 +8,7 @@ import br.ufc.crateus.madacarudev.country_town_paths.models.CityModel;
 import br.ufc.crateus.madacarudev.country_town_paths.models.RegionModel;
 import br.ufc.crateus.madacarudev.country_town_paths.models.TouristLocationModel;
 import br.ufc.crateus.madacarudev.country_town_paths.repositories.CityRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import br.ufc.crateus.madacarudev.country_town_paths.exceptions.BusinessException;
@@ -23,22 +23,12 @@ import java.util.*;
 import javax.transaction.Transactional;
 
 @Service
+@RequiredArgsConstructor
 public class CityService {
-
   private final ModelMapper modelMapper;
-
-  public CityService(ModelMapper modelMapper) {
-    this.modelMapper = modelMapper;
-  }
-
-  @Autowired
-  private CityRepository cityRepository;
-
-  @Autowired
-  private RegionService regionService;
-
-  @Autowired
-  private CityImageService cityImageService;
+  private final CityRepository cityRepository;
+  private final RegionService regionService;
+  private final CityImageService cityImageService;
 
   public List<CityOutputDto> getAll() {
     List<CityModel> citiesModel = cityRepository.findAll();
@@ -51,7 +41,7 @@ public class CityService {
     return citiesOutputDto;
   }
 
-  public List<CityOutputDto> getByRegion(UUID regionId) throws EntityNotFoundException {
+  public List<CityOutputDto> getByRegion(Long regionId) throws EntityNotFoundException {
     RegionModel regionModel = this.regionService.getRegionModelById(regionId);
     List<CityModel> cities = cityRepository.getCityModelByRegion(regionModel).orElse(new ArrayList<>());
 
@@ -64,12 +54,12 @@ public class CityService {
     return citiesOutput;
   }
 
-  public CityOutputDto getOutputDtoById(UUID id) throws EntityNotFoundException {
+  public CityOutputDto getOutputDtoById(Long id) throws EntityNotFoundException {
     CityModel cityModel = this.getById(id);
     return modelMapper.map(cityModel, CityOutputDto.class);
   }
 
-  public CityModel getById(UUID id) throws EntityNotFoundException {
+  public CityModel getById(Long id) throws EntityNotFoundException {
     Optional<CityModel> cityModel = cityRepository.findById(id);
 
     if (cityModel.isEmpty()) {
@@ -84,8 +74,7 @@ public class CityService {
   public void create(CreateCityInputDto city) throws EntityConflictException, EntityNotFoundException, FileProcessingException {
     List<TouristLocationModel> location = new ArrayList<TouristLocationModel>();
 
-    UUID regionId = city.getRegionId();
-
+    Long regionId = city.getRegionId();
     RegionModel regionModel = regionService.getRegionModelById(regionId);
 
     if (Objects.isNull(regionModel)) {
@@ -106,10 +95,10 @@ public class CityService {
   }
 
   @Transactional
-  public void update(UUID id, UpdateCityInputDto city) throws EntityNotFoundException {
+  public void update(Long id, UpdateCityInputDto city) throws EntityNotFoundException {
     CityModel cityModel = this.getById(id);
 
-    UUID regionId = city.getRegionId();
+    Long regionId = city.getRegionId();
     RegionModel regionModel = regionService.getRegionModelById(regionId);
 
     this.modelMapper.map(city, cityModel);
@@ -119,7 +108,7 @@ public class CityService {
   }
 
   @Transactional
-  public void delete(UUID id) throws EntityNotFoundException, FileProcessingException {
+  public void delete(Long id) throws EntityNotFoundException, FileProcessingException {
     CityModel city = this.getById(id);
     ArrayList<String> relatedFileUrls = this.getAllRelatedFileUrls(city);
 
@@ -139,7 +128,7 @@ public class CityService {
   @Transactional
   public void updateBannerImage(
     UpdateCityImageBannerInputDto imageUpdate,
-    UUID id
+    Long id
   ) throws EntityNotFoundException, FileProcessingException {
     CityModel cityModel = this.getById(id);
     String storedImageUrl = this.cityImageService.storeImage(imageUpdate.getImage());
@@ -156,8 +145,10 @@ public class CityService {
   }
 
   @Transactional
-  public void deleteImageCity(UUID cityId, Long imageId)
-    throws EntityNotFoundException, FileProcessingException, BusinessException {
+  public void deleteImageCity(
+    Long cityId,
+    Long imageId
+  ) throws EntityNotFoundException, FileProcessingException, BusinessException {
     CityModel cityModel = this.getById(cityId);
     this.cityImageService.deleteImage(imageId, cityModel);
   }
