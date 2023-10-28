@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import br.ufc.crateus.madacarudev.country_town_paths.dtos.output.CityOutputDto;
+import br.ufc.crateus.madacarudev.country_town_paths.dtos.output.SampleRegionWithCitiesOutputDto;
 import br.ufc.crateus.madacarudev.country_town_paths.services.CityService;
 
 import lombok.RequiredArgsConstructor;
@@ -32,7 +33,14 @@ public class RegionController implements RegionControllerOpenApi {
   @Override
   public ResponseEntity<List<RegionOutputDto>> getAllRegions() {
     List<RegionOutputDto> regions = regionService.getAllRegions();
-    return new ResponseEntity<>(regions, HttpStatus.OK);
+    return ResponseEntity.ok(regions);
+  }
+
+  @GetMapping("/cities")
+  @Override
+  public ResponseEntity<List<SampleRegionWithCitiesOutputDto>> getAllSampleRegionsWithCities() {
+    List<SampleRegionWithCitiesOutputDto> regionsWithCities = this.regionService.getAllRegionsWithSampleRegions();
+    return ResponseEntity.ok(regionsWithCities);
   }
 
   @GetMapping("/{id}")

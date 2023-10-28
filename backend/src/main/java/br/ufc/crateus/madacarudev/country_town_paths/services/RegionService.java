@@ -3,9 +3,12 @@ package br.ufc.crateus.madacarudev.country_town_paths.services;
 import br.ufc.crateus.madacarudev.country_town_paths.dtos.input.CreateRegionDto;
 import br.ufc.crateus.madacarudev.country_town_paths.dtos.input.UpdateRegionDto;
 import br.ufc.crateus.madacarudev.country_town_paths.dtos.output.RegionOutputDto;
+import br.ufc.crateus.madacarudev.country_town_paths.dtos.output.SampleCityOutputDto;
+import br.ufc.crateus.madacarudev.country_town_paths.dtos.output.SampleRegionWithCitiesOutputDto;
 import br.ufc.crateus.madacarudev.country_town_paths.models.CityModel;
 import br.ufc.crateus.madacarudev.country_town_paths.models.RegionModel;
 import br.ufc.crateus.madacarudev.country_town_paths.repositories.RegionRepository;
+import br.ufc.crateus.madacarudev.country_town_paths.utils.CityMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,18 +24,36 @@ public class RegionService {
 
   private final ModelMapper modelMapper;
   private final RegionRepository regionRepository;
-
+  private final CityMapper cityMapper;
 
   public List<RegionOutputDto> getAllRegions() {
-    List<RegionModel> regionsModel = regionRepository.findAll();
-    List<RegionOutputDto> regionsOutputDto = new ArrayList<RegionOutputDto>();
+    List<RegionModel> regionModels = regionRepository.findAll();
+    List<RegionOutputDto> regionOutputDtos = new ArrayList<RegionOutputDto>();
 
-    for (RegionModel regionModel : regionsModel) {
-      regionsOutputDto.add(modelMapper.map(regionModel, RegionOutputDto.class));
+    for (RegionModel regionModel : regionModels) {
+      RegionOutputDto regionOutputDto = modelMapper.map(regionModel, RegionOutputDto.class);
+      regionOutputDtos.add(regionOutputDto);
     }
 
-    return regionsOutputDto;
+    return regionOutputDtos;
   }
+
+  public List<SampleRegionWithCitiesOutputDto> getAllRegionsWithSampleRegions() {
+    List<RegionModel> regionModels = regionRepository.findAll();
+    List<SampleRegionWithCitiesOutputDto> regionOutputDtos = new ArrayList<SampleRegionWithCitiesOutputDto>();
+
+    for (RegionModel regionModel : regionModels) {
+      SampleRegionWithCitiesOutputDto regionOutputDto = modelMapper.map(regionModel, SampleRegionWithCitiesOutputDto.class);
+
+      List<SampleCityOutputDto> cities = this.cityMapper.convertModelToSampleOutputDtoCollection(regionModel.getCities());
+      regionOutputDto.setCities(cities);
+
+      regionOutputDtos.add(regionOutputDto);
+    }
+
+    return regionOutputDtos;
+  }
+
 
   public RegionOutputDto getRegionById(Long id) throws EntityNotFoundException {
     Optional<RegionModel> region = regionRepository.findById(id);

@@ -3,6 +3,7 @@ package br.ufc.crateus.madacarudev.country_town_paths.controllers.openapi;
 import java.util.List;
 
 import br.ufc.crateus.madacarudev.country_town_paths.dtos.output.CityOutputDto;
+import br.ufc.crateus.madacarudev.country_town_paths.dtos.output.SampleRegionWithCitiesOutputDto;
 import org.springframework.http.ResponseEntity;
 
 import br.ufc.crateus.madacarudev.country_town_paths.configs.SwaggerConfig;
@@ -21,6 +22,10 @@ public interface RegionControllerOpenApi {
 
   @ApiOperation(value = "Retorna todas as regiões")
   public ResponseEntity<List<RegionOutputDto>> getAllRegions();
+
+  @ApiOperation(value = "Retorna todas as regiões com lista simplificada de cidades")
+  public ResponseEntity<List<SampleRegionWithCitiesOutputDto>> getAllSampleRegionsWithCities();
+
   @ApiOperation(value = "Retorna todas as cidades da região")
   public ResponseEntity<List<CityOutputDto>> getAllCities(Long id) throws EntityNotFoundException;
 
