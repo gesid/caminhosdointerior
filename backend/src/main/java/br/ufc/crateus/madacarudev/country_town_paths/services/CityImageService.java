@@ -20,81 +20,90 @@ import br.ufc.crateus.madacarudev.country_town_paths.repositories.CityImageRepos
 
 @Service
 public class CityImageService {
-    @Autowired
-    private CityImageRepository cityImageRepository;
+  @Autowired
+  private CityImageRepository cityImageRepository;
 
-    @Autowired
-    private LocalStorageService storageService;
+  @Autowired
+  private LocalStorageService storageService;
 
-    public String storeImage(MultipartFile image) throws FileProcessingException {
-        return this.storageService.save("cities/images", image);
+  public String storeImage(MultipartFile image) throws FileProcessingException {
+    return this.storageService.save("cities/images", image);
+  }
+
+  public CityImageModel getById(Long id) throws EntityNotFoundException {
+    Optional<CityImageModel> searchedCityImage = this.cityImageRepository.findById(id);
+
+    if (searchedCityImage.isEmpty()) {
+      String message = String.format("Não existe uma imagem de cidade com id: %d", id);
+      throw new EntityNotFoundException(message);
     }
 
-    public CityImageModel getById(Long id) throws EntityNotFoundException {
-        Optional<CityImageModel> searchedCityImage = this.cityImageRepository.findById(id);
-    
-        if(searchedCityImage.isEmpty()){
-          String message = String.format("Não existe uma imagem de cidade com id: %d", id);
-          throw new EntityNotFoundException(message);
-        }
-    
-        return searchedCityImage.get();
+    return searchedCityImage.get();
+  }
+
+  @Transactional
+  public void saveAll(MultipartFile[] images, CityModel city) throws FileProcessingException {
+    List<String> previewImageUrls = this.storePreviewImages(images);
+    List<CityImageModel> cityImageModels = this.generatePreviewImageModels(previewImageUrls, city);
+
+    this.cityImageRepository.saveAll(cityImageModels);
+  }
+
+  private List<String> storePreviewImages(MultipartFile[] previewImageFiles) throws FileProcessingException {
+    List<String> previewImages = new ArrayList<String>();
+
+    for (MultipartFile previewImage : previewImageFiles) {
+      String url = this.storeImage(previewImage);
+      previewImages.add(url);
     }
 
-    @Transactional
-    public void saveAll(MultipartFile[] images, CityModel city) throws FileProcessingException {
-        List<String> previewImageUrls = this.storePreviewImages(images);
-        List<CityImageModel> cityImageModels = this.generatePreviewImageModels(previewImageUrls, city);
+    return previewImages;
+  }
 
-        this.cityImageRepository.saveAll(cityImageModels);
+  private List<CityImageModel> generatePreviewImageModels(List<String> previewImageUrls, CityModel city) {
+    List<CityImageModel> cityImages = new ArrayList<CityImageModel>();
+
+    for (String previewImageUrl : previewImageUrls) {
+      CityImageModel cityImage = new CityImageModel();
+
+      cityImage.setUrl(previewImageUrl);
+      cityImage.setCity(city);
+
+      cityImages.add(cityImage);
     }
 
-    private List<String> storePreviewImages(MultipartFile[] previewImageFiles) throws FileProcessingException {
-        List<String> previewImages = new ArrayList<String>();
-    
-        for (MultipartFile previewImage: previewImageFiles) {
-          String url = this.storeImage(previewImage);
-          previewImages.add(url);
-        }
-    
-        return previewImages;
+    return cityImages;
+  }
+
+  @Transactional
+  public void deleteImage(Long imageId, CityModel cityModel)
+    throws EntityNotFoundException, FileProcessingException, BusinessException {
+    CityImageModel cityImage = this.getById(imageId);
+    CityImageModel previewImage = this.getById(imageId);
+
+    if (this.previewImageDoesntBelongsToCity(previewImage, cityModel)) {
+      throw new BusinessException("A imagem não pertence a cidade");
     }
 
-    private List<CityImageModel> generatePreviewImageModels(List<String> previewImageUrls, CityModel city){
-        List<CityImageModel> cityImages = new ArrayList<CityImageModel>();
-    
-        for (String previewImageUrl: previewImageUrls) {
-          CityImageModel cityImage = new CityImageModel();
-    
-          cityImage.setUrl(previewImageUrl);
-          cityImage.setCity(city);
-    
-          cityImages.add(cityImage);
-        }
-    
-        return cityImages;
+    this.storageService.delete(cityImage.getUrl());
+    this.cityImageRepository.delete(cityImage);
+  }
+
+  private boolean previewImageDoesntBelongsToCity(CityImageModel previewImage, CityModel city) {
+    return !previewImage.getCity().getId().equals(city.getId());
+  }
+
+  @Transactional
+  public void deleteImageFile(String resourceUrl) throws FileProcessingException {
+    this.storageService.delete(resourceUrl);
+  }
+
+  @Transactional
+  public void deleteAllImageFiles(
+    ArrayList<String> resourceUrls
+  ) throws FileProcessingException {
+    for (String resourceUrl: resourceUrls) {
+      this.deleteImageFile(resourceUrl);
     }
-
-    @Transactional
-    public void deleteImage(Long imageId, CityModel cityModel)
-     throws EntityNotFoundException, FileProcessingException, BusinessException {
-        CityImageModel cityImage = this.getById(imageId);
-        CityImageModel previewImage = this.getById(imageId);
-
-        if(this.previewImageDoesntBelongsToCity(previewImage, cityModel)){
-            throw new BusinessException("A imagem não pertence a cidade");
-        }
-
-        this.storageService.delete(cityImage.getUrl());
-        this.cityImageRepository.delete(cityImage);
-    }
-
-    private boolean previewImageDoesntBelongsToCity(CityImageModel previewImage, CityModel city){
-        return !previewImage.getCity().getId().equals(city.getId());
-    }
-
-    @Transactional
-    public void deleteImageFile(String resourceUrl) throws FileProcessingException {
-        this.storageService.delete(resourceUrl);
-    }
+  }
 }

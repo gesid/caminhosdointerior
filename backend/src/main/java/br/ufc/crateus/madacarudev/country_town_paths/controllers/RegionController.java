@@ -5,7 +5,9 @@ import java.util.UUID;
 
 import javax.validation.Valid;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import br.ufc.crateus.madacarudev.country_town_paths.dtos.output.CityOutputDto;
+import br.ufc.crateus.madacarudev.country_town_paths.services.CityService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,39 +23,47 @@ import br.ufc.crateus.madacarudev.country_town_paths.services.RegionService;
 
 @RestController
 @RequestMapping("api/regions")
+@RequiredArgsConstructor
 public class RegionController implements RegionControllerOpenApi {
-    @Autowired
-    private RegionService regionService;
+  private final RegionService regionService;
+  private final CityService cityService;
 
-    @GetMapping
-    public ResponseEntity<List<RegionOutputDto>> getAllRegions() {
-        List<RegionOutputDto> regions = regionService.getAllRegions();
-        return new ResponseEntity<>(regions, HttpStatus.OK);
-    }
+  @GetMapping
+  public ResponseEntity<List<RegionOutputDto>> getAllRegions() {
+    List<RegionOutputDto> regions = regionService.getAllRegions();
+    return new ResponseEntity<>(regions, HttpStatus.OK);
+  }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<RegionOutputDto> getRegionById(@PathVariable UUID id) throws EntityNotFoundException{
-        RegionOutputDto region = regionService.getRegionById(id);
-        return ResponseEntity.ok(region);
-    }
+  @GetMapping("/{id}")
+  public ResponseEntity<RegionOutputDto> getRegionById(@PathVariable UUID id) throws EntityNotFoundException {
+    RegionOutputDto region = regionService.getRegionById(id);
+    return ResponseEntity.ok(region);
+  }
 
-    @PostMapping
-    public ResponseEntity<InformativeMessageOutputDto> create(@Valid @RequestBody CreateRegionDto region) throws EntityConflictException{
-        regionService.create(region);
-        InformativeMessageOutputDto message = new InformativeMessageOutputDto("Região criada com sucesso.");
-        return ResponseEntity.status(HttpStatus.CREATED).body(message);
-    }
+  @GetMapping("/{id}/cities")
+  @Override
+  public ResponseEntity<List<CityOutputDto>> getAllCities(@PathVariable UUID id) throws EntityNotFoundException {
+    List<CityOutputDto> cities = this.cityService.getByRegion(id);
+    return ResponseEntity.ok(cities);
+  }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<InformativeMessageOutputDto> update(@Valid @RequestBody UpdateRegionDto region, @PathVariable UUID id) throws EntityNotFoundException{
-        regionService.update(id, region);
-        InformativeMessageOutputDto message = new InformativeMessageOutputDto("Região atualizada com sucesso.");
-        return new ResponseEntity<>(message, HttpStatus.OK);
-    }
+  @PostMapping
+  public ResponseEntity<InformativeMessageOutputDto> create(@Valid @RequestBody CreateRegionDto region) throws EntityConflictException {
+    regionService.create(region);
+    InformativeMessageOutputDto message = new InformativeMessageOutputDto("Região criada com sucesso.");
+    return ResponseEntity.status(HttpStatus.CREATED).body(message);
+  }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteRegion(@PathVariable UUID id) {
-        regionService.deleteRegion(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
+  @PutMapping("/{id}")
+  public ResponseEntity<InformativeMessageOutputDto> update(@Valid @RequestBody UpdateRegionDto region, @PathVariable UUID id) throws EntityNotFoundException {
+    regionService.update(id, region);
+    InformativeMessageOutputDto message = new InformativeMessageOutputDto("Região atualizada com sucesso.");
+    return new ResponseEntity<>(message, HttpStatus.OK);
+  }
+
+  @DeleteMapping("/{id}")
+  public ResponseEntity<Void> deleteRegion(@PathVariable UUID id) {
+    regionService.deleteRegion(id);
+    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+  }
 }

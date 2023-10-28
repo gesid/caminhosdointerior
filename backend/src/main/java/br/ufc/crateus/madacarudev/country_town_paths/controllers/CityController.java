@@ -5,8 +5,9 @@ import java.util.UUID;
 
 import javax.validation.Valid;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,9 +25,9 @@ import br.ufc.crateus.madacarudev.country_town_paths.services.CityService;
 
 @RestController
 @RequestMapping("api/cities")
+@RequiredArgsConstructor
 public class CityController implements CityControllerOpenApi {
-    @Autowired
-    private CityService cityService;
+    private final CityService cityService;
 
     @GetMapping
     public ResponseEntity<List<CityOutputDto>> getAll() {
@@ -36,32 +37,35 @@ public class CityController implements CityControllerOpenApi {
 
     @GetMapping("/{id}")
     public ResponseEntity<CityOutputDto> getById(@PathVariable UUID id) throws EntityNotFoundException{
-        CityOutputDto city = cityService.getById(id);
+        CityOutputDto city = cityService.getOutputDtoById(id);
         return ResponseEntity.ok(city);
     }
 
-    @GetMapping("/{regionId}")
-    public ResponseEntity<List<CityOutputDto>> getByRegion(@PathVariable UUID regionId) throws EntityNotFoundException{
-        List<CityOutputDto> cities = cityService.getByRegion(regionId);
-        return ResponseEntity.ok(cities);
-    }
-
-    @PostMapping
-    public ResponseEntity<InformativeMessageOutputDto> create(@Valid @RequestBody @ModelAttribute CreateCityInputDto city) throws EntityConflictException, EntityNotFoundException, FileProcessingException{
+    @PostMapping(consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+    public ResponseEntity<InformativeMessageOutputDto> create(
+      @Valid @ModelAttribute CreateCityInputDto city
+    ) throws EntityConflictException, EntityNotFoundException, FileProcessingException{
         cityService.create(city);
+
         InformativeMessageOutputDto message = new InformativeMessageOutputDto("Cidade criada com sucesso.");
         return ResponseEntity.status(HttpStatus.CREATED).body(message);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<InformativeMessageOutputDto> update(@Valid @RequestBody UpdateCityInputDto city, @PathVariable UUID id) throws EntityNotFoundException{
+    public ResponseEntity<InformativeMessageOutputDto> update(
+      @Valid @RequestBody UpdateCityInputDto city,
+      @PathVariable UUID id
+    ) throws EntityNotFoundException {
         cityService.update(id, city);
+
         InformativeMessageOutputDto message = new InformativeMessageOutputDto("Cidade atualizada com sucesso.");
         return ResponseEntity.status(HttpStatus.OK).body(message);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable UUID id) {
+    public ResponseEntity<Void> delete(
+      @PathVariable UUID id
+    ) throws EntityNotFoundException, FileProcessingException {
         cityService.delete(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
@@ -78,11 +82,12 @@ public class CityController implements CityControllerOpenApi {
     }
 
 
-  @DeleteMapping("/{id}/imagesCity/{imageId}")
+  @DeleteMapping("/{id}/preview-images/{imageId}")
   @Override
-  public ResponseEntity<Void> deleteImageCity(@PathVariable("id") UUID cityId,
-   @PathVariable("imageId") Long imageId) 
-   throws EntityNotFoundException, FileProcessingException, BusinessException {
+  public ResponseEntity<Void> deleteImageCity(
+    @PathVariable("id") UUID cityId,
+    @PathVariable("imageId") Long imageId
+  ) throws EntityNotFoundException, FileProcessingException, BusinessException {
 
     this.cityService.deleteImageCity(cityId, imageId);
     
