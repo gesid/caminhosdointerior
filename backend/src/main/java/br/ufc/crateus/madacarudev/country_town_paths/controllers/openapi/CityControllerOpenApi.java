@@ -1,10 +1,10 @@
 package br.ufc.crateus.madacarudev.country_town_paths.controllers.openapi;
 
-import java.util.UUID;
-
 import javax.validation.Valid;
 
 import java.util.List;
+
+import br.ufc.crateus.madacarudev.country_town_paths.dtos.output.DetailedCityOutputDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,7 +29,7 @@ public interface CityControllerOpenApi {
   public ResponseEntity<List<CityOutputDto>> getAll();
 
   @ApiOperation(value = "Busca uma cidade por id")
-  public ResponseEntity<CityOutputDto> getById(
+  public ResponseEntity<DetailedCityOutputDto> getById(
     Long id
   ) throws EntityNotFoundException, BadRequestException;
 
