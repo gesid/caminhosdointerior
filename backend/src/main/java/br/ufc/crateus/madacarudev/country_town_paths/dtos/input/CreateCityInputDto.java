@@ -1,7 +1,5 @@
 package br.ufc.crateus.madacarudev.country_town_paths.dtos.input;
 
-import java.util.UUID;
-
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -28,5 +26,5 @@ public class CreateCityInputDto {
     private MultipartFile[] imagesCity;
 
     @NotNull
-    private UUID regionId;
+    private Long regionId;
 }

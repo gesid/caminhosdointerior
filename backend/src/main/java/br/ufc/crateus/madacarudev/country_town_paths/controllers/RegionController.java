@@ -44,7 +44,7 @@ public class RegionController implements RegionControllerOpenApi {
 
   @GetMapping("/{id}/cities")
   @Override
-  public ResponseEntity<List<CityOutputDto>> getAllCities(@PathVariable UUID id) throws EntityNotFoundException {
+  public ResponseEntity<List<CityOutputDto>> getAllCities(@PathVariable Long id) throws EntityNotFoundException {
     List<CityOutputDto> cities = this.cityService.getByRegion(id);
     return ResponseEntity.ok(cities);
   }
@@ -72,7 +72,7 @@ public class RegionController implements RegionControllerOpenApi {
 
   @DeleteMapping("/{id}")
   @Override
-  public ResponseEntity<Void> deleteRegion(@PathVariable Long id) {
+  public ResponseEntity<Void> deleteRegion(@PathVariable Long id) throws EntityNotFoundException {
     regionService.deleteRegion(id);
     return new ResponseEntity<>(HttpStatus.NO_CONTENT);
   }

@@ -26,12 +26,12 @@ import io.swagger.annotations.ApiOperation;
 public interface CityControllerOpenApi {
 
   @ApiOperation(value = "Retorna todas as cidades")
-  @GetMapping("/cities")
   public ResponseEntity<List<CityOutputDto>> getAll();
 
   @ApiOperation(value = "Busca uma cidade por id")
-  @GetMapping("/cities/{id}")
-  public ResponseEntity<CityOutputDto> getById(@PathVariable UUID id) throws EntityNotFoundException, BadRequestException;
+  public ResponseEntity<CityOutputDto> getById(
+    Long id
+  ) throws EntityNotFoundException, BadRequestException;
 
   @ApiOperation(value = "Cria uma cidade")
   public ResponseEntity<InformativeMessageOutputDto> create(
@@ -41,21 +41,23 @@ public interface CityControllerOpenApi {
   @ApiOperation(value = "Atualiza uma cidade")
   public ResponseEntity<InformativeMessageOutputDto> update(
     UpdateCityInputDto city,
-    @PathVariable UUID id
+    Long id
   ) throws EntityNotFoundException, BadRequestException;
 
   @ApiOperation(value = "Deleta uma cidade")
-  @DeleteMapping("/cities/{id}")
-  public ResponseEntity<Void> delete(@PathVariable UUID id) throws BadRequestException, EntityNotFoundException, FileProcessingException;
+  public ResponseEntity<Void> delete(
+    Long id
+  ) throws BadRequestException, EntityNotFoundException, FileProcessingException;
 
   @ApiOperation(value = "Atualiza o banner de uma cidade")
-  @PatchMapping("cities/{id}/banner-image")
-  public ResponseEntity<Void> updateBannerImage(@PathVariable("id") UUID id, @Valid @ModelAttribute UpdateCityImageBannerInputDto bannerInputDto) throws EntityNotFoundException, FileProcessingException;
+  public ResponseEntity<Void> updateBannerImage(
+    Long id,
+    @Valid @ModelAttribute UpdateCityImageBannerInputDto bannerInputDto
+  ) throws EntityNotFoundException, FileProcessingException;
 
   @ApiOperation(value = "Deleta uma imagem da cidade")
-  @DeleteMapping("/{id}/preview-images/{imageId}")
   public ResponseEntity<Void> deleteImageCity(
-    @PathVariable("id") UUID cityId,
+    @PathVariable("id") Long cityId,
     @PathVariable("imageId") Long imageId
   ) throws EntityNotFoundException, FileProcessingException, BusinessException;
 

@@ -37,7 +37,7 @@ public class RegionService {
   public RegionOutputDto getRegionById(Long id) throws EntityNotFoundException {
     Optional<RegionModel> region = regionRepository.findById(id);
 
-    if(region.isEmpty()){
+    if (region.isEmpty()) {
       String errorMessage = "Não existe região com o id: " + id + ".";
       throw new EntityNotFoundException(errorMessage);
     }
@@ -64,31 +64,33 @@ public class RegionService {
   public void update(Long id, UpdateRegionDto input) throws EntityNotFoundException {
     Optional<RegionModel> possibleExistingRegion = regionRepository.findById(id);
 
-    if(possibleExistingRegion.isEmpty()){
+    if (possibleExistingRegion.isEmpty()) {
       String errorMessage = "Não existe região com o id: " + id + ".";
       throw new EntityNotFoundException(errorMessage);
     }
 
     RegionModel region = possibleExistingRegion.get();
     region.setName(input.getName());
+  }
 
 
-    public RegionModel getRegionModelById(UUID id) throws EntityNotFoundException {
-        RegionModel regionModel = regionRepository.findById(id).orElse(null);
-        checkIfNotExistisRegionById(regionModel, id);
+  public RegionModel getRegionModelById (Long id) throws EntityNotFoundException {
+    Optional<RegionModel> regionModel = regionRepository.findById(id);
 
-        return regionModel;
+    if(regionModel.isEmpty()){
+      String message = String.format("Não existe uma região cadastrada com id: %d", id);
+      throw new EntityNotFoundException(message);
     }
 
-    private void checkIfExistisOtherRegionSameName(RegionModel existingRegion) throws EntityConflictException{
-        if(Objects.nonNull(existingRegion)){
-            String errorMessage = "Já existe outra região com o nome: " + existingRegion.getName() + ".";
-            throw new EntityConflictException(errorMessage);
-        }
-    }
+    return regionModel.get();
+  }
 
+  public void deleteRegion(Long id) throws EntityNotFoundException {
+    RegionModel region = this.getRegionModelById(id);
+    regionRepository.delete(region);
+  }
 
-  private void checkIfExistsOtherRegionSameName(RegionModel existingRegion) throws EntityConflictException {
+  private void checkIfExistsOtherRegionSameName (RegionModel existingRegion) throws EntityConflictException {
     if (Objects.nonNull(existingRegion)) {
       String errorMessage = "Já existe outra região com o nome: " + existingRegion.getName() + ".";
       throw new EntityConflictException(errorMessage);

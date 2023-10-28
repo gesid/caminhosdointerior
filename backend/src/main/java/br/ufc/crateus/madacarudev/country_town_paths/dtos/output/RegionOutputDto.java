@@ -12,6 +12,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RegionOutputDto {
+    private Long id;
+
     @NotBlank
     public String name;
 }
