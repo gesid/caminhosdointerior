@@ -12,7 +12,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.http.ResponseEntity;
 
 
-@Api(tags = {SwaggerConfig.EVENT_TAG})
+@Api(tags = {SwaggerConfig.TOURIST_LOCATION_TAG})
 public interface TouristLocationControllerOpenApi {
   @ApiOperation(value = "Cadastra um local turístico")
   public ResponseEntity<?> create(CreateTouristLocationInputDto input)
