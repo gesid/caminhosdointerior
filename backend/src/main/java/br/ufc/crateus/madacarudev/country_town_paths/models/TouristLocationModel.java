@@ -37,6 +37,6 @@ public class TouristLocationModel {
     @JoinColumn(name = "city_id", nullable = false)
     private CityModel city;
 
-    @OneToMany(mappedBy = "tourist_location", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "touristLocation", cascade = CascadeType.REMOVE)
     private List<TouristLocationImageModel> previewImages;
 }
