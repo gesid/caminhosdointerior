@@ -20,9 +20,9 @@ public class TouristAttractionCategoryModel {
   @Column(nullable = false)
   private String name;
 
-  @OneToMany(mappedBy = "category")
-  private List<TouristLocationModel> locations;
-
   @OneToMany(mappedBy = "touristAttractionCategory")
   private List<EventModel> events;
+
+  @OneToMany(mappedBy = "touristAttractionCategory")
+  private List<TouristLocationModel> touristLocations;
 }

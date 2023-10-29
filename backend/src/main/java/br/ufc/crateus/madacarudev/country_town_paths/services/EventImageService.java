@@ -6,7 +6,6 @@ import br.ufc.crateus.madacarudev.country_town_paths.exceptions.FileProcessingEx
 import br.ufc.crateus.madacarudev.country_town_paths.models.EventImageModel;
 import br.ufc.crateus.madacarudev.country_town_paths.models.EventModel;
 import br.ufc.crateus.madacarudev.country_town_paths.repositories.EventImageRepository;
-import br.ufc.crateus.madacarudev.country_town_paths.services.interfaces.IStorageService;
 
 import lombok.RequiredArgsConstructor;
 

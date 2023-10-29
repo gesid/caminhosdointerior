@@ -24,6 +24,7 @@ public class SwaggerConfig {
   public static final String FEEDBACK_TAG = "Feedback";
   public static final String EVENT_TAG = "Eventos";
   public static final String TOURIST_ATTRACTION_CATEGORY_TAG = "Categorias de atrações turísticas";
+  public static final String TOURIST_LOCATION_TAG = "Locais Turísticos";
 
   @Bean
   public Docket api() {

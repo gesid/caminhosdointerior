@@ -1,5 +1,7 @@
 package br.ufc.crateus.madacarudev.country_town_paths.models;
 
+import java.util.List;
+
 import javax.persistence.*;
 
 import lombok.AllArgsConstructor;
@@ -22,16 +24,19 @@ public class TouristLocationModel {
     private String name;
 
     @Column(nullable = false)
-    private String imageBannerUrl;
+    private String bannerImage;
 
     @Column(nullable = false)
     private String description;
 
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
-    private TouristAttractionCategoryModel category;
+    private TouristAttractionCategoryModel touristAttractionCategory;
     
     @ManyToOne
     @JoinColumn(name = "city_id", nullable = false)
     private CityModel city;
+
+    @OneToMany(mappedBy = "touristLocation", cascade = CascadeType.REMOVE)
+    private List<TouristLocationImageModel> previewImages;
 }
