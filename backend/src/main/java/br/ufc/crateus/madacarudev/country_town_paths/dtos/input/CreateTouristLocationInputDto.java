@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
-import br.ufc.crateus.madacarudev.country_town_paths.models.TouristAttractionCategoryModel;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -23,9 +22,6 @@ public class CreateTouristLocationInputDto {
 
   @NotNull
   private Long cityId;
-
-  @NotNull
-  private TouristAttractionCategoryModel category;
 
   @NotNull
   private MultipartFile bannerImage;
