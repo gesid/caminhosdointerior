@@ -11,7 +11,7 @@ import br.ufc.crateus.madacarudev.country_town_paths.services.TouristAttractionS
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api/tourist-attraction")
+@RequestMapping("/api")
 @RequiredArgsConstructor
 public class TouristAttractionController implements TouristAttractionControllerOpenApi{
   private final TouristAttractionService touristAttractionService;
