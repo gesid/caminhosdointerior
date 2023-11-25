@@ -3,7 +3,6 @@ package br.ufc.crateus.madacarudev.country_town_paths.services;
 import br.ufc.crateus.madacarudev.country_town_paths.dtos.input.CreateTouristLocationInputDto;
 import br.ufc.crateus.madacarudev.country_town_paths.dtos.input.UpdateTouristLocationImageBannerInputDto;
 import br.ufc.crateus.madacarudev.country_town_paths.dtos.input.UpdateTouristLocationInputDto;
-import br.ufc.crateus.madacarudev.country_town_paths.dtos.output.TouristLocationOutputDto;
 import br.ufc.crateus.madacarudev.country_town_paths.exceptions.BusinessException;
 import br.ufc.crateus.madacarudev.country_town_paths.exceptions.EntityNotFoundException;
 import br.ufc.crateus.madacarudev.country_town_paths.exceptions.FileProcessingException;
@@ -29,12 +28,6 @@ public class TouristLocationService {
 
   private final ModelMapper modelMapper;
   private final TouristLocationRepository touristLocationRepository;
-
-   public List<TouristLocationOutputDto> getAll() {
-    List<TouristLocationOutputDto> touristLocationOutputDto = new ArrayList<TouristLocationOutputDto>();
-    return touristLocationOutputDto;
-
-  }
 
   @Transactional
   public void create(CreateTouristLocationInputDto input)
