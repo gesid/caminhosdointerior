@@ -4,9 +4,11 @@ import br.ufc.crateus.madacarudev.country_town_paths.controllers.openapi.Tourist
 import br.ufc.crateus.madacarudev.country_town_paths.dtos.input.CreateTouristLocationInputDto;
 import br.ufc.crateus.madacarudev.country_town_paths.dtos.input.UpdateTouristLocationImageBannerInputDto;
 import br.ufc.crateus.madacarudev.country_town_paths.dtos.input.UpdateTouristLocationInputDto;
+import br.ufc.crateus.madacarudev.country_town_paths.dtos.output.DetailedTouristLocationOutputDto;
 import br.ufc.crateus.madacarudev.country_town_paths.exceptions.BusinessException;
 import br.ufc.crateus.madacarudev.country_town_paths.exceptions.EntityNotFoundException;
 import br.ufc.crateus.madacarudev.country_town_paths.exceptions.FileProcessingException;
+import br.ufc.crateus.madacarudev.country_town_paths.models.TouristLocationModel;
 import br.ufc.crateus.madacarudev.country_town_paths.services.TouristLocationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,15 +16,22 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 import javax.validation.Valid;
+
 
 @RestController
 @RequestMapping("/api/tourist-locations")
 @RequiredArgsConstructor
 public class TouristLocationController implements TouristLocationControllerOpenApi{
   private final TouristLocationService TouristLocationService;
+  
+  @GetMapping("/{id}")
+  @Override
+  public ResponseEntity<DetailedTouristLocationOutputDto> getById(@PathVariable Long id) throws EntityNotFoundException {
+    DetailedTouristLocationOutputDto touristLocation = this.TouristLocationService.getDetailedById(id);
+     return ResponseEntity.ok(touristLocation);
+  }
  
   @PostMapping(consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
   @Override

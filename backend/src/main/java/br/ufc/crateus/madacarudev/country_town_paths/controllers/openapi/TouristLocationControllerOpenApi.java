@@ -4,16 +4,23 @@ import br.ufc.crateus.madacarudev.country_town_paths.configs.SwaggerConfig;
 import br.ufc.crateus.madacarudev.country_town_paths.dtos.input.CreateTouristLocationInputDto;
 import br.ufc.crateus.madacarudev.country_town_paths.dtos.input.UpdateTouristLocationImageBannerInputDto;
 import br.ufc.crateus.madacarudev.country_town_paths.dtos.input.UpdateTouristLocationInputDto;
+import br.ufc.crateus.madacarudev.country_town_paths.dtos.output.DetailedTouristLocationOutputDto;
 import br.ufc.crateus.madacarudev.country_town_paths.exceptions.BusinessException;
 import br.ufc.crateus.madacarudev.country_town_paths.exceptions.EntityNotFoundException;
 import br.ufc.crateus.madacarudev.country_town_paths.exceptions.FileProcessingException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 
 
 @Api(tags = {SwaggerConfig.TOURIST_LOCATION_TAG})
 public interface TouristLocationControllerOpenApi {
+
+  @ApiOperation(value = "Buscar um local turístico")
+  public ResponseEntity<DetailedTouristLocationOutputDto> getById(@PathVariable Long id)
+    throws EntityNotFoundException;
+
   @ApiOperation(value = "Cadastra um local turístico")
   public ResponseEntity<?> create(CreateTouristLocationInputDto input)
     throws BusinessException, EntityNotFoundException, FileProcessingException;
