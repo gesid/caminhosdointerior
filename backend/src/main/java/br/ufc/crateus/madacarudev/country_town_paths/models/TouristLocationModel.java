@@ -23,7 +23,7 @@ public class TouristLocationModel {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
+    @Column(name = "image_banner_url",nullable = false)
     private String bannerImage;
 
     @Column(nullable = false)
