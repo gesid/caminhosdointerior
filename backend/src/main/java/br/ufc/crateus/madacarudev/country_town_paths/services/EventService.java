@@ -3,6 +3,9 @@ package br.ufc.crateus.madacarudev.country_town_paths.services;
 import br.ufc.crateus.madacarudev.country_town_paths.dtos.input.CreateEventInputDto;
 import br.ufc.crateus.madacarudev.country_town_paths.dtos.input.UpdateEventImageBannerInputDto;
 import br.ufc.crateus.madacarudev.country_town_paths.dtos.input.UpdateEventInputDto;
+import br.ufc.crateus.madacarudev.country_town_paths.dtos.output.DetailedCityOutputDto;
+import br.ufc.crateus.madacarudev.country_town_paths.dtos.output.DetailedEventOutputDto;
+import br.ufc.crateus.madacarudev.country_town_paths.dtos.output.SampleEventOutputDto;
 import br.ufc.crateus.madacarudev.country_town_paths.exceptions.BusinessException;
 import br.ufc.crateus.madacarudev.country_town_paths.exceptions.EntityNotFoundException;
 import br.ufc.crateus.madacarudev.country_town_paths.exceptions.FileProcessingException;
@@ -10,12 +13,15 @@ import br.ufc.crateus.madacarudev.country_town_paths.models.CityModel;
 import br.ufc.crateus.madacarudev.country_town_paths.models.EventModel;
 import br.ufc.crateus.madacarudev.country_town_paths.models.TouristAttractionCategoryModel;
 import br.ufc.crateus.madacarudev.country_town_paths.repositories.EventRepository;
+import br.ufc.crateus.madacarudev.country_town_paths.utils.EventMapper;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -27,6 +33,23 @@ public class EventService {
 
   private final ModelMapper modelMapper;
   private final EventRepository eventRepository;
+  private final EventMapper eventMapper;
+
+  public List<SampleEventOutputDto> getAll() {
+    List<EventModel> eventsModel = eventRepository.findAll();
+    List<SampleEventOutputDto> eventOutputDto = new ArrayList<SampleEventOutputDto>();
+
+    for (EventModel eventModel : eventsModel) {
+      eventOutputDto.add(modelMapper.map(eventModel, SampleEventOutputDto.class));
+    }
+
+    return eventOutputDto;
+  }
+
+  public DetailedEventOutputDto getDetailedById(Long id) throws EntityNotFoundException{
+    EventModel city = this.getById(id);
+    return this.eventMapper.convertModelToDetailedOutputDto(city);
+  }
 
   @Transactional
   public void create(CreateEventInputDto input)
@@ -110,6 +133,25 @@ public class EventService {
     }
 
   }
+
+  @Transactional
+  public void delete(Long id) throws EntityNotFoundException, FileProcessingException {
+    EventModel event = this.getById(id);
+    ArrayList<String> relatedFileUrls = this.getAllRelatedFileUrls(event);
+
+    this.eventRepository.deleteById(id);
+    this.eventImageService.deleteAllImageFiles(relatedFileUrls);
+  }
+
+  private ArrayList<String> getAllRelatedFileUrls(EventModel event){
+    ArrayList<String> relatedFileUrls = new ArrayList<String>();
+
+    relatedFileUrls.add(event.getBannerImage());
+    event.getPreviewImages().forEach((eventImage) -> relatedFileUrls.add(eventImage.getUrl()));
+
+    return relatedFileUrls;
+  }
+
 
   @Transactional
   public void deletePreviewImage(

@@ -93,6 +93,15 @@ public class EventImageService {
   }
 
   @Transactional
+  public void deleteAllImageFiles(
+    ArrayList<String> resourceUrls
+  ) throws FileProcessingException {
+    for (String resourceUrl: resourceUrls) {
+      this.deleteImageFile(resourceUrl);
+    }
+  }
+
+  @Transactional
   public void deleteImageFile(String resourceUrl) throws FileProcessingException {
     this.storageService.delete(resourceUrl);
   }
