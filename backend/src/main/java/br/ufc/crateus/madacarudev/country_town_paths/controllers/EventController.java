@@ -4,6 +4,8 @@ import br.ufc.crateus.madacarudev.country_town_paths.controllers.openapi.EventCo
 import br.ufc.crateus.madacarudev.country_town_paths.dtos.input.CreateEventInputDto;
 import br.ufc.crateus.madacarudev.country_town_paths.dtos.input.UpdateEventImageBannerInputDto;
 import br.ufc.crateus.madacarudev.country_town_paths.dtos.input.UpdateEventInputDto;
+import br.ufc.crateus.madacarudev.country_town_paths.dtos.output.DetailedEventOutputDto;
+import br.ufc.crateus.madacarudev.country_town_paths.dtos.output.SampleEventOutputDto;
 import br.ufc.crateus.madacarudev.country_town_paths.exceptions.BusinessException;
 import br.ufc.crateus.madacarudev.country_town_paths.exceptions.EntityNotFoundException;
 import br.ufc.crateus.madacarudev.country_town_paths.exceptions.FileProcessingException;
@@ -15,12 +17,27 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/events")
 @RequiredArgsConstructor
 public class EventController implements EventControllerOpenApi{
   private final EventService eventService;
+
+  @Override
+  @GetMapping
+  public ResponseEntity<List<SampleEventOutputDto>> getAll() throws EntityNotFoundException {
+   var output = this.eventService.getAll();
+   return ResponseEntity.ok(output);
+  }
+
+  @Override
+  @GetMapping("/{id}")
+  public ResponseEntity<DetailedEventOutputDto> getById(Long id) throws EntityNotFoundException {
+    var output = this.eventService.getDetailedById(id);
+    return ResponseEntity.ok(output);
+  }
 
   @PostMapping(consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
   @Override
@@ -62,5 +79,12 @@ public class EventController implements EventControllerOpenApi{
 
     this.eventService.deletePreviewImage(eventId, previewImageId);
     return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+  }
+
+  @Override
+  @DeleteMapping("/{id}")
+  public ResponseEntity<?> delete(@PathVariable  Long id) throws EntityNotFoundException {
+    var output = this.eventService.getDetailedById(id);
+    return ResponseEntity.ok(output);
   }
 }

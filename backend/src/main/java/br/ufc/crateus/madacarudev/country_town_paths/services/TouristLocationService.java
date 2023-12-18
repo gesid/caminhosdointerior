@@ -3,14 +3,11 @@ package br.ufc.crateus.madacarudev.country_town_paths.services;
 import br.ufc.crateus.madacarudev.country_town_paths.dtos.input.CreateTouristLocationInputDto;
 import br.ufc.crateus.madacarudev.country_town_paths.dtos.input.UpdateTouristLocationImageBannerInputDto;
 import br.ufc.crateus.madacarudev.country_town_paths.dtos.input.UpdateTouristLocationInputDto;
-import br.ufc.crateus.madacarudev.country_town_paths.dtos.output.CityOutputDto;
-import br.ufc.crateus.madacarudev.country_town_paths.dtos.output.DetailedCityOutputDto;
 import br.ufc.crateus.madacarudev.country_town_paths.dtos.output.DetailedTouristLocationOutputDto;
 import br.ufc.crateus.madacarudev.country_town_paths.exceptions.BusinessException;
 import br.ufc.crateus.madacarudev.country_town_paths.exceptions.EntityNotFoundException;
 import br.ufc.crateus.madacarudev.country_town_paths.exceptions.FileProcessingException;
 import br.ufc.crateus.madacarudev.country_town_paths.models.CityModel;
-import br.ufc.crateus.madacarudev.country_town_paths.models.RegionModel;
 import br.ufc.crateus.madacarudev.country_town_paths.models.TouristAttractionCategoryModel;
 import br.ufc.crateus.madacarudev.country_town_paths.models.TouristLocationModel;
 import br.ufc.crateus.madacarudev.country_town_paths.repositories.TouristLocationRepository;
@@ -18,14 +15,10 @@ import br.ufc.crateus.madacarudev.country_town_paths.utils.TouristLocationMapper
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @Service
