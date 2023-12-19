@@ -22,5 +22,8 @@ export const Logo = styled.img`
 export const Events = styled.div`
   display: flex;
   flex-direction: column;
-/*   gap: 2.5rem; */
+  align-items: center;
+
+  width: 100%;
+  margin: 2rem 0rem;
 `;

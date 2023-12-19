@@ -3,10 +3,12 @@ import { styled } from "styled-components";
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100%; // TODO: verificar padding da pagina
-  gap: 2.5rem;
   justify-content: center;
-  padding: 2.25rem 2rem;
+  
+  max-width: 90%; 
+  width: 90%;
+
+  margin-bottom: 2rem;
 `;
 
 export const TitleArea = styled.div`
@@ -36,8 +38,7 @@ export const Cards = styled.div`
 export const CardContainer = styled.div`
   display: grid;
   place-items: center;
-  min-height: 15rem;
-  min-width: 25%;
+  width: 100%;
   background-image: url(${(props) => props.background});
   background-color: rgba(0, 0, 0, 0.4);
   background-blend-mode: color;
