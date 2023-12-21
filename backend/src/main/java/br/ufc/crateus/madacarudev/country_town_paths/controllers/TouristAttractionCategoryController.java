@@ -5,9 +5,11 @@ import br.ufc.crateus.madacarudev.country_town_paths.dtos.input.CreateTouristAtt
 import br.ufc.crateus.madacarudev.country_town_paths.dtos.output.InformativeMessageOutputDto;
 import br.ufc.crateus.madacarudev.country_town_paths.dtos.output.TouristAttractionCategoryOutputDto;
 import br.ufc.crateus.madacarudev.country_town_paths.exceptions.EntityConflictException;
+import br.ufc.crateus.madacarudev.country_town_paths.exceptions.FileProcessingException;
 import br.ufc.crateus.madacarudev.country_town_paths.services.TouristAttractionCategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,10 +30,10 @@ public class TouristAttractionCategoryController implements TouristAttractionCat
     return ResponseEntity.ok(touristAttractionCategoryOutputDtoList);
   }
 
-  @PostMapping
+  @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
   public ResponseEntity<InformativeMessageOutputDto> create(
-    @Valid @RequestBody CreateTouristAttractionCategoryInputDto input
-  ) throws EntityConflictException {
+    @Valid @ModelAttribute CreateTouristAttractionCategoryInputDto input
+  ) throws EntityConflictException, FileProcessingException {
     this.touristAttractionCategoryService.create(input);
 
     InformativeMessageOutputDto messageOutputDto = new InformativeMessageOutputDto("Categoria de atração turística cadastrada com sucesso");

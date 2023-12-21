@@ -5,6 +5,7 @@ import br.ufc.crateus.madacarudev.country_town_paths.dtos.input.CreateTouristAtt
 import br.ufc.crateus.madacarudev.country_town_paths.dtos.output.InformativeMessageOutputDto;
 import br.ufc.crateus.madacarudev.country_town_paths.dtos.output.TouristAttractionCategoryOutputDto;
 import br.ufc.crateus.madacarudev.country_town_paths.exceptions.EntityConflictException;
+import br.ufc.crateus.madacarudev.country_town_paths.exceptions.FileProcessingException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.ResponseEntity;
@@ -20,5 +21,5 @@ public interface TouristAttractionCategoryControllerOpenApi {
   @ApiOperation(value = "Cria uma categoria de atração turística")
   public ResponseEntity<InformativeMessageOutputDto> create(
     CreateTouristAttractionCategoryInputDto input
-  ) throws EntityConflictException;
+  ) throws EntityConflictException, FileProcessingException;
 }
