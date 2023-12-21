@@ -10,11 +10,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "axios": "^1.5.1",
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.14.1",
+    "react-photo-album": "^2.3.0",
+    "react-responsive-carousel": "^3.2.23",
+    "react-router-dom": "^6.19.0",
     "sort-by": "^1.2.0",
     "styled-components": "^6.0.3"
   },

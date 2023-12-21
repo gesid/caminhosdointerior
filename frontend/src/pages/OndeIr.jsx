@@ -1,183 +1,52 @@
-import { SideBar } from "../components/Sidebar";
-import { EventCard } from "../components/EventCard";
-import * as S from "../styles/ondeIrStyles";
-import { useEffect } from "react";
-import { useCurrentStep } from "../context/CurrentStep.context.";
-import { NavBar } from "../components/NavBar";
+import { StyledBannerWhereGo, StyledMainPage } from "../components/MosaicSlider/styles";
 import Footer from "../components/footer/Footer";
+import { useCurrentStep } from "../context/CurrentStep.context.";
+import { MosaicSlider } from "../components/MosaicSlider/MosaicSlider";
+import cards from "../data/cards";
+import cardsInhamuns from "../data/cardsInhamuns";
+import cardsCariri from "../data/cardsCariri";
+import cardsPontosTuristicos from "../data/cardsPontosTuristicos";
+import * as S from "../styles/homeStyles";
+import { useEffect } from "react";
 
 export const OndeIr = () => {
-  const [_currentStep, setCurrentStep] = useCurrentStep();
 
-  useEffect(() => {
-    setCurrentStep(2);
-  }, []);
+    const sliders = [
+        {
+            title: "Sertões de Crateús",
+            cards: cards,
+        },
+        {
+            title: "Sertões dos Inhamuns",
+            cards: cardsInhamuns,
+        },
+        {
+            title: "Cariri",
+            cards: cardsCariri,
+        }
+    ];
 
-  return (
-    <>
-      <NavBar />
-      <S.Container>
-        <SideBar />
-        <S.Content>
-          <h3>Resultados da pesquisa</h3>
-          <S.Events>
-            <EventCard
-              category="CULINARIO"
-              city={{
-                name: "Crateus",
-                sertao: "Inhamus",
-              }}
-              image="https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcTZm0Elodyz3SjOtENXwymrdLLSAxY8utgyT1YAkK8NvNTBqdBpSmyAS5ur6GsYZ4_8lhJuunIVJWzkiXlk9QfX4EDl22oN"
-              name="Paraça da matriz"
-            />
-            <EventCard
-              category="CULINARIO"
-              city={{
-                name: "Crateus",
-                sertao: "Inhamus",
-              }}
-              image="https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcTZm0Elodyz3SjOtENXwymrdLLSAxY8utgyT1YAkK8NvNTBqdBpSmyAS5ur6GsYZ4_8lhJuunIVJWzkiXlk9QfX4EDl22oN"
-              name="Paraça da matriz"
-            />
-            <EventCard
-              category="CULINARIO"
-              city={{
-                name: "Crateus",
-                sertao: "Inhamus",
-              }}
-              image="https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcTZm0Elodyz3SjOtENXwymrdLLSAxY8utgyT1YAkK8NvNTBqdBpSmyAS5ur6GsYZ4_8lhJuunIVJWzkiXlk9QfX4EDl22oN"
-              name="Paraça da matriz"
-            />
-            <EventCard
-              category="CULINARIO"
-              city={{
-                name: "Crateus",
-                sertao: "Inhamus",
-              }}
-              image="https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcTZm0Elodyz3SjOtENXwymrdLLSAxY8utgyT1YAkK8NvNTBqdBpSmyAS5ur6GsYZ4_8lhJuunIVJWzkiXlk9QfX4EDl22oN"
-              name="Paraça da matriz"
-            />
-            <EventCard
-              category="CULINARIO"
-              city={{
-                name: "Crateus",
-                sertao: "Inhamus",
-              }}
-              image="https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcTZm0Elodyz3SjOtENXwymrdLLSAxY8utgyT1YAkK8NvNTBqdBpSmyAS5ur6GsYZ4_8lhJuunIVJWzkiXlk9QfX4EDl22oN"
-              name="Paraça da matriz"
-            />
-            <EventCard
-              category="CULINARIO"
-              city={{
-                name: "Crateus",
-                sertao: "Inhamus",
-              }}
-              image="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Igreja_Matriz_de_Crate%C3%BAs.JPG/800px-Igreja_Matriz_de_Crate%C3%BAs.JPG"
-              name="Paraça da matriz"
-            />
-            <EventCard
-              category="CULINARIO"
-              city={{
-                name: "Crateus",
-                sertao: "Inhamus",
-              }}
-              image="https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcTZm0Elodyz3SjOtENXwymrdLLSAxY8utgyT1YAkK8NvNTBqdBpSmyAS5ur6GsYZ4_8lhJuunIVJWzkiXlk9QfX4EDl22oN"
-              name="Paraça da matriz"
-            />
-            <EventCard
-              category="CULINARIO"
-              city={{
-                name: "Crateus",
-                sertao: "Inhamus",
-              }}
-              image="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Igreja_Matriz_de_Crate%C3%BAs.JPG/800px-Igreja_Matriz_de_Crate%C3%BAs.JPG"
-              name="Paraça da matriz"
-            />
-            <EventCard
-              category="CULINARIO"
-              city={{
-                name: "Crateus",
-                sertao: "Inhamus",
-              }}
-              image="https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcTZm0Elodyz3SjOtENXwymrdLLSAxY8utgyT1YAkK8NvNTBqdBpSmyAS5ur6GsYZ4_8lhJuunIVJWzkiXlk9QfX4EDl22oN"
-              name="Paraça da matriz"
-            />
-            <EventCard
-              category="CULINARIO"
-              city={{
-                name: "Crateus",
-                sertao: "Inhamus",
-              }}
-              image="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Igreja_Matriz_de_Crate%C3%BAs.JPG/800px-Igreja_Matriz_de_Crate%C3%BAs.JPG"
-              name="Paraça da matriz"
-            />
-            <EventCard
-              category="CULINARIO"
-              city={{
-                name: "Crateus",
-                sertao: "Inhamus",
-              }}
-              image="https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcTZm0Elodyz3SjOtENXwymrdLLSAxY8utgyT1YAkK8NvNTBqdBpSmyAS5ur6GsYZ4_8lhJuunIVJWzkiXlk9QfX4EDl22oN"
-              name="Paraça da matriz"
-            />
-            <EventCard
-              category="CULINARIO"
-              city={{
-                name: "Crateus",
-                sertao: "Inhamus",
-              }}
-              image="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Igreja_Matriz_de_Crate%C3%BAs.JPG/800px-Igreja_Matriz_de_Crate%C3%BAs.JPG"
-              name="Paraça da matriz"
-            />
-            <EventCard
-              category="CULINARIO"
-              city={{
-                name: "Crateus",
-                sertao: "Inhamus",
-              }}
-              image="https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcTZm0Elodyz3SjOtENXwymrdLLSAxY8utgyT1YAkK8NvNTBqdBpSmyAS5ur6GsYZ4_8lhJuunIVJWzkiXlk9QfX4EDl22oN"
-              name="Paraça da matriz"
-            />
-            <EventCard
-              category="CULINARIO"
-              city={{
-                name: "Crateus",
-                sertao: "Inhamus",
-              }}
-              image="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Igreja_Matriz_de_Crate%C3%BAs.JPG/800px-Igreja_Matriz_de_Crate%C3%BAs.JPG"
-              name="Paraça da matriz"
-            />
-            <EventCard
-              category="CULINARIO"
-              city={{
-                name: "Crateus",
-                sertao: "Inhamus",
-              }}
-              image="https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcTZm0Elodyz3SjOtENXwymrdLLSAxY8utgyT1YAkK8NvNTBqdBpSmyAS5ur6GsYZ4_8lhJuunIVJWzkiXlk9QfX4EDl22oN"
-              name="Paraça da matriz"
-            />{" "}
-            <EventCard
-              category="CULINARIO"
-              city={{
-                name: "Crateus",
-                sertao: "Inhamus",
-              }}
-              image="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Igreja_Matriz_de_Crate%C3%BAs.JPG/800px-Igreja_Matriz_de_Crate%C3%BAs.JPG"
-              name="Paraça da matriz"
-            />
-            <EventCard
-              category="CULINARIO"
-              city={{
-                name: "Crateus",
-                sertao: "Inhamus",
-              }}
-              image="https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcTZm0Elodyz3SjOtENXwymrdLLSAxY8utgyT1YAkK8NvNTBqdBpSmyAS5ur6GsYZ4_8lhJuunIVJWzkiXlk9QfX4EDl22oN"
-              name="Paraça da matriz"
-            />
-          </S.Events>
-        </S.Content>
-      </S.Container>
-      <Footer />
-    </>
-  );
-};
+
+    const [currentStep, setCurrentStep] = useCurrentStep();
+
+    useEffect(() => {
+        setCurrentStep(1);
+    }, []);
+
+    return (
+        <>
+            <S.Events>
+                     <MosaicSlider {...sliders[0]} />
+                {/* {sliders.map((slider) => (
+                    <MosaicSlider {...slider} key={slider.title} />
+                ))}*/}
+            </S.Events>
+            <StyledMainPage>
+                <StyledBannerWhereGo>
+                    <img src="src/assets/OndeIrImage.png" className="StyleBanner" alt="Where Go Banner Advise"></img>
+                </StyledBannerWhereGo>
+            </StyledMainPage>
+            <Footer />
+        </>
+    );
+}
