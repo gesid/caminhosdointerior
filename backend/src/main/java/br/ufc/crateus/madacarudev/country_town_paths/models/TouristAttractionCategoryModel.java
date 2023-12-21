@@ -20,6 +20,9 @@ public class TouristAttractionCategoryModel {
   @Column(nullable = false)
   private String name;
 
+  @Column(nullable = false)
+  private String iconUrl;
+
   @OneToMany(mappedBy = "touristAttractionCategory")
   private List<EventModel> events;
 

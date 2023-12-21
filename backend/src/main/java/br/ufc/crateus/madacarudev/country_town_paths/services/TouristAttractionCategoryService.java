@@ -4,12 +4,14 @@ import br.ufc.crateus.madacarudev.country_town_paths.dtos.input.CreateTouristAtt
 import br.ufc.crateus.madacarudev.country_town_paths.dtos.output.TouristAttractionCategoryOutputDto;
 import br.ufc.crateus.madacarudev.country_town_paths.exceptions.EntityConflictException;
 import br.ufc.crateus.madacarudev.country_town_paths.exceptions.EntityNotFoundException;
+import br.ufc.crateus.madacarudev.country_town_paths.exceptions.FileProcessingException;
 import br.ufc.crateus.madacarudev.country_town_paths.models.TouristAttractionCategoryModel;
 import br.ufc.crateus.madacarudev.country_town_paths.repositories.TouristAttractionCategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -18,6 +20,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class TouristAttractionCategoryService {
   private final TouristAttractionCategoryRepository touristAttractionCategoryRepository;
+  private final TouristAttractionCategoryIconService touristAttractionCategoryIconService;
+
   private final ModelMapper modelMapper;
 
   public TouristAttractionCategoryModel getById(Long id) throws EntityNotFoundException {
@@ -42,7 +46,8 @@ public class TouristAttractionCategoryService {
       ).collect(Collectors.toList());
   }
 
-  public void create(CreateTouristAttractionCategoryInputDto input) throws EntityConflictException {
+  @Transactional
+  public void create(CreateTouristAttractionCategoryInputDto input) throws EntityConflictException, FileProcessingException {
     Optional<TouristAttractionCategoryModel> touristAttractionCategoryWithSameName
       = this.touristAttractionCategoryRepository.findByName(input.getName());
 
@@ -51,7 +56,11 @@ public class TouristAttractionCategoryService {
       throw new EntityConflictException(message);
     }
 
+    String iconUrl = this.touristAttractionCategoryIconService.storeImage(input.getIcon());
+
     TouristAttractionCategoryModel touristAttractionCategory = this.modelMapper.map(input, TouristAttractionCategoryModel.class);
+    touristAttractionCategory.setIconUrl(iconUrl);
+
     this.touristAttractionCategoryRepository.save(touristAttractionCategory);
   }
 }
