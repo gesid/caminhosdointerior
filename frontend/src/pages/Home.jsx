@@ -7,39 +7,36 @@ import Dining from "../assets/dining.svg";
 import { Search } from "../components/Search";
 import { Slider } from "../components/Slider";
 import Footer from "../components/footer/Footer";
-
-import cards from "../data/cards";
-
+import cardsPontosTuristicos from "../data/cardsPontosTuristicos";
 import * as S from "../styles/homeStyles";
 import { useEffect } from "react";
 import { useCurrentStep } from "../context/CurrentStep.context.";
-import { NavBar } from "../components/NavBar";
 
 const sliders = [
   {
     title: "Atrações em destaque",
     icon: Calendar,
-    cards: cards,
+    cards: cardsPontosTuristicos,
   },
   {
     title: "Lugares para quem ama turismo religioso",
     icon: Church,
-    cards: cards,
+    cards: cardsPontosTuristicos,
   },
   {
     title: "Lugares para quem ama turismo ambiental",
     icon: Tree,
-    cards: cards,
+    cards: cardsPontosTuristicos,
   },
   {
     title: "Lugares para quem ama gastronomia",
     icon: Dining,
-    cards: cards,
+    cards: cardsPontosTuristicos,
   },
 ];
 
 export const Home = () => {
-  const [_currentStep, setCurrentStep] = useCurrentStep();
+  const [currentStep, setCurrentStep] = useCurrentStep();
 
   useEffect(() => {
     setCurrentStep(1);
@@ -47,7 +44,6 @@ export const Home = () => {
 
   return (
     <>
-      <NavBar />
       <S.Header>
         <S.Logo src={LogoWhite} alt="Logo caminhos do interior" />
         <Search />
