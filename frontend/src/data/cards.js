@@ -1,12 +1,5 @@
 const cards = [
   {
-    id: "1",
-    title: "Crateus",
-    width: 600,
-    heigh: 800,
-    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Igreja_Matriz_de_Crate%C3%BAs.JPG/800px-Igreja_Matriz_de_Crate%C3%BAs.JPG",
-  },
-  {
     id: "2",
     title: "Catunda",
     image: "https://aprece.org.br/wp-content/uploads/2013/12/aprece-associacao-dos-municipios-do-estado-do-ceara_800px-catunda_-_ceara-1-e1669904780160.jpg",
