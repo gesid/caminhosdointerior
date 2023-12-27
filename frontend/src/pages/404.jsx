@@ -5,10 +5,12 @@ import { StyledNotFoundImage } from "../components/footer/styled";
 import interjeicao from '../assets/interjeicao.svg'
 import notfound from '../assets/notfound.svg'
 import figuresNotFound from '../assets/figuresNotFound.png'
+import { NavBar } from "../components/NavBar";
 
 export const Page404 = () => {
   return (
     <div>
+      <NavBar />
       <StyledNotFoundPageText1>
         <div className="text1">
           <div className="svg-text">

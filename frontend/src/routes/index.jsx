@@ -3,8 +3,13 @@ import { Home } from "../pages/Home";
 import { Page404 } from "../pages/404";
 import { Contact } from "../pages/Contact";
 import {OndeIr} from "../pages/OndeIr";
+import { OQueFazer } from "../pages/OQueFazer";
 
 export const route = createBrowserRouter([
+  {
+    path: "o-que-fazer",
+    element: <OQueFazer />
+  },
   {
     path: "/contact",
     element: <Contact />,

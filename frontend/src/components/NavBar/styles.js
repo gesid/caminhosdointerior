@@ -1,10 +1,11 @@
+import { Link } from "react-router-dom";
 import { styled } from "styled-components";
 
 export const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 80%;
+  width: 90%;
   margin: 0 auto;
   background-color: ${(props) => props.theme.colors.orange};
   padding: 0.6rem 8.25rem;
@@ -22,7 +23,7 @@ export const Actions = styled.ul`
   gap: 1rem;
 `;
 
-export const Option = styled.a`
+export const Option = styled(Link)`
   color: #000;
   text-decoration: none;
 

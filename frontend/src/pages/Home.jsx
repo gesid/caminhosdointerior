@@ -1,56 +1,60 @@
+import { useEffect, useState } from "react";
+
+import { NavBar } from "../components/NavBar";
+
 import LogoWhite from "../assets/LogoWhite.svg";
-import Calendar from "../assets/calendar.svg";
-import Church from "../assets/church.svg";
-import Tree from "../assets/tree.svg";
-import Dining from "../assets/dining.svg";
 
 import { Search } from "../components/Search";
 import { Slider } from "../components/Slider";
 import Footer from "../components/footer/Footer";
-import cardsPontosTuristicos from "../data/cardsPontosTuristicos";
 import * as S from "../styles/homeStyles";
-import { useEffect } from "react";
-import { useCurrentStep } from "../context/CurrentStep.context.";
 
-const sliders = [
-  {
-    title: "Atrações em destaque",
-    icon: Calendar,
-    cards: cardsPontosTuristicos,
-  },
-  {
-    title: "Lugares para quem ama turismo religioso",
-    icon: Church,
-    cards: cardsPontosTuristicos,
-  },
-  {
-    title: "Lugares para quem ama turismo ambiental",
-    icon: Tree,
-    cards: cardsPontosTuristicos,
-  },
-  {
-    title: "Lugares para quem ama gastronomia",
-    icon: Dining,
-    cards: cardsPontosTuristicos,
-  },
-];
+import { api } from "../services/api";
 
 export const Home = () => {
-  const [currentStep, setCurrentStep] = useCurrentStep();
+  const [touristAttractionCategoriesWithAttractions, setTouristAttractionCategoriesWithAttractions] = useState([]);
+
+  async function loadTouristAttractionCategoriesWithAttractions(){
+    try {
+      const { data } = await api.get("api/tourist-attractions-with-categories");
+
+      const mappedData = data.map((touristAttractionCategoryWithAttractions) => {
+        return {
+          id: touristAttractionCategoryWithAttractions.id,
+          title: `Lugares para quem ama ${touristAttractionCategoryWithAttractions.name.toLowerCase()}`,
+          icon: touristAttractionCategoryWithAttractions.iconUrl,
+          items: touristAttractionCategoryWithAttractions.locations.map((item) => {
+            return {
+              id: item.id,
+              image: item.bannerImage,
+              title: item.name,
+            }
+          })
+        }
+      });
+      
+      setTouristAttractionCategoriesWithAttractions(mappedData);
+    } catch (error) {
+      alert("Erro ao carregar lista de categorias de atrações turísticas com atrações");
+    }
+  }
 
   useEffect(() => {
-    setCurrentStep(1);
+    loadTouristAttractionCategoriesWithAttractions();
   }, []);
 
   return (
     <>
+      <NavBar />
       <S.Header>
-        <S.Logo src={LogoWhite} alt="Logo caminhos do interior" />
-        <Search />
+        <S.HeaderContent>
+          <S.Logo src={LogoWhite} alt="Logo caminhos do interior" />
+          <Search />
+        </S.HeaderContent>
       </S.Header>
       <S.Events>
-        {sliders.map((slider) => (
-          <Slider {...slider} key={slider.title} />
+        {touristAttractionCategoriesWithAttractions.map((slider) => (
+          <Slider {...slider} key={slider.id} />
         ))}
       </S.Events>
       <Footer />

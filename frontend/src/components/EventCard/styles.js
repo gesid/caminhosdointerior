@@ -4,6 +4,8 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   cursor: pointer;
+
+  flex-shrink: 0;
 `;
 
 export const Image = styled.img`
@@ -13,6 +15,7 @@ export const Image = styled.img`
   background-size: 100% 100%;
   border-radius: 10px;
 `;
+
 export const Icon = styled.img`
   width: 2rem;
 `;
