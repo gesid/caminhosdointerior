@@ -18,8 +18,6 @@ export function ThreeImagesGridSection({ data: section }) {
     }
   }, [section]);
 
-  console.log(section.sizingOptions)
-
   return (
     <DefaultStyle.Container width={section.width}>
       <CustomStyle.ContentContainer>

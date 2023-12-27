@@ -15,6 +15,8 @@ export const TitleArea = styled.div`
   display: flex;
   align-items: center;
   gap: 0.5rem;
+
+  margin-bottom: 1.6rem;
 `;
 
 export const Icon = styled.img`
@@ -33,18 +35,41 @@ export const Cards = styled.div`
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
   align-items: center;
+
+  -ms-overflow-style: none;  
+  scrollbar-width: none;  
+
+  &::-webkit-scrollbar{
+    display: none;
+  }
+
 `;
 
 export const CardContainer = styled.div`
   display: grid;
   place-items: center;
-  width: 100%;
   background-image: url(${(props) => props.background});
   background-color: rgba(0, 0, 0, 0.4);
   background-blend-mode: color;
   background-size: 100% 100%;
   position: relative;
   scroll-snap-align: center;
+
+  border-radius: 6px;
+  height: 100%;
+  width: 100%;
+
+  cursor: pointer;
+`;
+
+export const CardWrapper = styled.div`
+  display: flex;
+  flex-shrink: 0;
+
+  border-radius: 6px;
+
+  height: 14rem;
+  width: 20rem;
 `;
 
 export const CardTitle = styled.h2`

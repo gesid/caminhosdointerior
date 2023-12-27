@@ -19,6 +19,15 @@ const cardsPontosTuristicos = [
     title: "Museu dos Inhamuns",
     image: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Museu_dos_inhamuns%2C_tau%C3%A1%2C_cear%C3%A1.jpg/640px-Museu_dos_inhamuns%2C_tau%C3%A1%2C_cear%C3%A1.jpg",
   },
+  {
+    id: "5",
+    title: "Museu dos Inhamuns",
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Museu_dos_inhamuns%2C_tau%C3%A1%2C_cear%C3%A1.jpg/640px-Museu_dos_inhamuns%2C_tau%C3%A1%2C_cear%C3%A1.jpg",
+  },{
+    id: "6",
+    title: "Museu dos Inhamuns",
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Museu_dos_inhamuns%2C_tau%C3%A1%2C_cear%C3%A1.jpg/640px-Museu_dos_inhamuns%2C_tau%C3%A1%2C_cear%C3%A1.jpg",
+  },
 ];
 
 export default cardsPontosTuristicos;

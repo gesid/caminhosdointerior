@@ -3,14 +3,23 @@ import { styled } from "styled-components";
 import background from "../assets/backgroundInputLogo.svg";
 
 export const Header = styled.header`
-    width: 90%;
-    background: url(${background}) no-repeat center center ;
-    margin: auto;
-    display: flex;
-    padding: 3.5rem;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+`;
+
+export const HeaderContent = styled.div`
+  background: url(${background}) no-repeat;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  width: 90%;
+  background-size: cover;
+  padding: 1rem 0px;
+  border-radius: 4px;
 `;
 
 export const Logo = styled.img`

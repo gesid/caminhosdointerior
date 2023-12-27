@@ -9,14 +9,25 @@ export const Container = styled.div`
   overflow: hidden;
 `;
 
-export const Events = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-auto-rows: minmax(30%, auto);
-  grid-auto-flow: row;
-  height: 100%;
-  gap: 1rem;
-  overflow-y: scroll;
+export const ContentContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  margin-top: 2rem;
+`;
+
+export const RegionContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  width: 90%;
+  margin-bottom: 2rem;
 `;
 
 export const Content = styled.div`

@@ -28,8 +28,6 @@ export const MosaicSlider = ({ title, cards }) => {
 
   const photos = cards.map((card, index) => {
 
-    console.log({ image1, image2, image3 })
-
     const width = 400;
     const maxHeight = 600;
     const middleHeight = (maxHeight / 2) - 20;
@@ -48,7 +46,6 @@ export const MosaicSlider = ({ title, cards }) => {
       width: card.width ? card.width : 400,
       height: card.heigh ? card.heigh : 260
     };
-    console.log(height);
 
     if (image1 == index) {
       image1 += 3;
@@ -65,8 +62,6 @@ export const MosaicSlider = ({ title, cards }) => {
     return objeto;
   });
 
-
-  console.log(photos)
   return (
     <S.Container>
       <S.TitleArea>

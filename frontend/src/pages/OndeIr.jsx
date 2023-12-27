@@ -1,52 +1,69 @@
-import { StyledBannerWhereGo, StyledMainPage } from "../components/MosaicSlider/styles";
+import { useEffect, useState } from "react";
+import {
+  StyledBannerWhereGo,
+  StyledMainPage,
+} from "../components/MosaicSlider/styles";
 import Footer from "../components/footer/Footer";
-import { useCurrentStep } from "../context/CurrentStep.context.";
-import { MosaicSlider } from "../components/MosaicSlider/MosaicSlider";
-import cards from "../data/cards";
-import cardsInhamuns from "../data/cardsInhamuns";
-import cardsCariri from "../data/cardsCariri";
-import cardsPontosTuristicos from "../data/cardsPontosTuristicos";
-import * as S from "../styles/homeStyles";
-import { useEffect } from "react";
+
+import { NavBar } from "../components/NavBar";
+
+import * as CustomStyle from "../styles/ondeIrStyles";
+
+import { api } from "../services/api";
+import { TitledHorizontalMansoryGrid } from "../components/TitledHorizontalMasonryGrid";
 
 export const OndeIr = () => {
+  const [regionsWithCities, setRegionsWithCities] = useState([]);
 
-    const sliders = [
-        {
-            title: "Sertões de Crateús",
-            cards: cards,
-        },
-        {
-            title: "Sertões dos Inhamuns",
-            cards: cardsInhamuns,
-        },
-        {
-            title: "Cariri",
-            cards: cardsCariri,
-        }
-    ];
+  async function loadRegionsWithCities() {
+    try {
+      const { data } = await api.get("api/regions/cities");
 
+      const mappedData = data.map((item) => {
+        return {
+          ...item,
+          cities: item.cities.map((city) => ({
+            id: city.id,
+            image: city.imageBannerUrl,
+            title: city.name,
+          })),
+        };
+      });
 
-    const [currentStep, setCurrentStep] = useCurrentStep();
+      setRegionsWithCities(mappedData);
+    } catch (error) {
+      alert("Erro ao carregar regiões com cidades");
+    }
+  }
 
-    useEffect(() => {
-        setCurrentStep(1);
-    }, []);
+  useEffect(() => {
+    loadRegionsWithCities();
+  }, []);
 
-    return (
-        <>
-            <S.Events>
-                     <MosaicSlider {...sliders[0]} />
-                {/* {sliders.map((slider) => (
-                    <MosaicSlider {...slider} key={slider.title} />
-                ))}*/}
-            </S.Events>
-            <StyledMainPage>
-                <StyledBannerWhereGo>
-                    <img src="src/assets/OndeIrImage.png" className="StyleBanner" alt="Where Go Banner Advise"></img>
-                </StyledBannerWhereGo>
-            </StyledMainPage>
-            <Footer />
-        </>
-    );
-}
+  return (
+    <>
+      <NavBar />
+      <CustomStyle.ContentContainer>
+
+        {regionsWithCities.map((regionWithCities) => (
+          <CustomStyle.RegionContainer key={regionWithCities.id}>
+            <TitledHorizontalMansoryGrid
+              title={regionWithCities.name}
+              items={regionWithCities.cities}
+            />
+          </CustomStyle.RegionContainer>
+        ))}
+      </CustomStyle.ContentContainer>
+      <StyledMainPage>
+        <StyledBannerWhereGo>
+          <img
+            src="src/assets/OndeIrImage.png"
+            className="StyleBanner"
+            alt="Where Go Banner Advise"
+          ></img>
+        </StyledBannerWhereGo>
+      </StyledMainPage>
+      <Footer />
+    </>
+  );
+};

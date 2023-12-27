@@ -13,6 +13,5 @@ export const Item = styled.div`
   display: flex;
   height: ${props => props.height};
 
-  background-color: red;
   width: 100%;
 `;
