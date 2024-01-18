@@ -8,8 +8,6 @@ Este projeto acadêmico surgiu a partir de uma célula de aprendizado cooperativ
 
 Dentro desse contexto de estudos, a célula explorou os seguintes métodos ativos de aprendizagem: sala de aula invertida, gamificação e aprendizagem baseado em projetos. Como projeto a ser desenvolvido, identificou-se a possibilidade de construir um website para divulgação do turismo no interior do Ceará. A solução foi intitulada "Caminhos do Interior" e se posiciona como uma iniciativa colaborativa, open source e sem fins lucrativos, inicialmente sob MIT License.
 
-Atualmente o projeto não se encontra em desenvolvimento, tendo sua manutenção interrompida por tempo indeterminado.
-
 **Agradecemos a todos(as) que colaboraram no projeto.**
 
 ## 🧳 Introdução
