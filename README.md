@@ -2,6 +2,8 @@
 
 # Caminhos do Interior
 
+**Esta iniciativa encontra-se desativada por tempo indeterminado e, consequentemente, com processo de manutenção interrompido. Agradecemos a todos(as) que colaboraram para o desenvolvimento do projeto!** 💪
+
 ## 📸 Motivação
 
 Este projeto acadêmico surgiu a partir de uma célula de aprendizado cooperativa organizada pelo Grupo de Estudos em Sistemas de Informação e Inovação Digital (<a href="https://gesid.github.io/" target="_blank" rel="noopener noreferrer">GESID</a>), dividida em três frentes principais: Back-end Development, Front-end Development e UX/UI Design. Tal célula de estudos ocorreu entre junho e julho de 2023.
